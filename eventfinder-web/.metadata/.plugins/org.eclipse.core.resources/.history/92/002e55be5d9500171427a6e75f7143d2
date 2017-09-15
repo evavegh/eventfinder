@@ -1,0 +1,81 @@
+package hu.evave.eventfinder.web.model;
+
+import static com.querydsl.core.types.PathMetadataFactory.*;
+
+import com.querydsl.core.types.dsl.*;
+
+import com.querydsl.core.types.PathMetadata;
+import javax.annotation.Generated;
+import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
+
+
+/**
+ * QEvent is a Querydsl query type for Event
+ */
+@Generated("com.querydsl.codegen.EntitySerializer")
+public class QEvent extends EntityPathBase<Event> {
+
+    private static final long serialVersionUID = 110105501L;
+
+    private static final PathInits INITS = PathInits.DIRECT2;
+
+    public static final QEvent event = new QEvent("event");
+
+    public final hu.evave.eventfinder.web.model.user.QUser createdBy;
+
+    public final StringPath description = createString("description");
+
+    public final DateTimePath<java.util.Date> endsAt = createDateTime("endsAt", java.util.Date.class);
+
+    public final StringPath fbUrl = createString("fbUrl");
+
+    public final NumberPath<Long> id = createNumber("id", Long.class);
+
+    public final QLocation location;
+
+    public final StringPath name = createString("name");
+
+    public final hu.evave.eventfinder.web.model.price.QPrice normalPrice;
+
+    public final ListPath<hu.evave.eventfinder.web.model.price.Price, hu.evave.eventfinder.web.model.price.QPrice> prices = this.<hu.evave.eventfinder.web.model.price.Price, hu.evave.eventfinder.web.model.price.QPrice>createList("prices", hu.evave.eventfinder.web.model.price.Price.class, hu.evave.eventfinder.web.model.price.QPrice.class, PathInits.DIRECT2);
+
+    public final hu.evave.eventfinder.web.model.price.QPrice retiredPrice;
+
+    public final DateTimePath<java.util.Date> startsAt = createDateTime("startsAt", java.util.Date.class);
+
+    public final hu.evave.eventfinder.web.model.price.QPrice studentPrice;
+
+    public final StringPath summary = createString("summary");
+
+    public final ListPath<hu.evave.eventfinder.web.model.type.EventType, EnumPath<hu.evave.eventfinder.web.model.type.EventType>> types = this.<hu.evave.eventfinder.web.model.type.EventType, EnumPath<hu.evave.eventfinder.web.model.type.EventType>>createList("types", hu.evave.eventfinder.web.model.type.EventType.class, EnumPath.class, PathInits.DIRECT2);
+
+    public final StringPath webUrl = createString("webUrl");
+
+    public QEvent(String variable) {
+        this(Event.class, forVariable(variable), INITS);
+    }
+
+    public QEvent(Path<? extends Event> path) {
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
+    }
+
+    public QEvent(PathMetadata metadata) {
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QEvent(PathMetadata metadata, PathInits inits) {
+        this(Event.class, metadata, inits);
+    }
+
+    public QEvent(Class<? extends Event> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.createdBy = inits.isInitialized("createdBy") ? new hu.evave.eventfinder.web.model.user.QUser(forProperty("createdBy")) : null;
+        this.location = inits.isInitialized("location") ? new QLocation(forProperty("location")) : null;
+        this.normalPrice = inits.isInitialized("normalPrice") ? new hu.evave.eventfinder.web.model.price.QPrice(forProperty("normalPrice")) : null;
+        this.retiredPrice = inits.isInitialized("retiredPrice") ? new hu.evave.eventfinder.web.model.price.QPrice(forProperty("retiredPrice")) : null;
+        this.studentPrice = inits.isInitialized("studentPrice") ? new hu.evave.eventfinder.web.model.price.QPrice(forProperty("studentPrice")) : null;
+    }
+
+}
+

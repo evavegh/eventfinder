@@ -1,0 +1,53 @@
+package hu.evave.eventfinder.web.model.type;
+
+import static com.querydsl.core.types.PathMetadataFactory.*;
+
+import com.querydsl.core.types.dsl.*;
+
+import com.querydsl.core.types.PathMetadata;
+import javax.annotation.Generated;
+import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
+
+
+/**
+ * QEventTypeMapping is a Querydsl query type for EventTypeMapping
+ */
+@Generated("com.querydsl.codegen.EntitySerializer")
+public class QEventTypeMapping extends EntityPathBase<EventTypeMapping> {
+
+    private static final long serialVersionUID = -312640335L;
+
+    private static final PathInits INITS = PathInits.DIRECT2;
+
+    public static final QEventTypeMapping eventTypeMapping = new QEventTypeMapping("eventTypeMapping");
+
+    public final hu.evave.eventfinder.web.model.QEvent event;
+
+    public final NumberPath<Long> id = createNumber("id", Long.class);
+
+    public final EnumPath<EventType> type = createEnum("type", EventType.class);
+
+    public QEventTypeMapping(String variable) {
+        this(EventTypeMapping.class, forVariable(variable), INITS);
+    }
+
+    public QEventTypeMapping(Path<? extends EventTypeMapping> path) {
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
+    }
+
+    public QEventTypeMapping(PathMetadata metadata) {
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QEventTypeMapping(PathMetadata metadata, PathInits inits) {
+        this(EventTypeMapping.class, metadata, inits);
+    }
+
+    public QEventTypeMapping(Class<? extends EventTypeMapping> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.event = inits.isInitialized("event") ? new hu.evave.eventfinder.web.model.QEvent(forProperty("event"), inits.get("event")) : null;
+    }
+
+}
+

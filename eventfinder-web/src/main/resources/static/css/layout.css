@@ -1,0 +1,51 @@
+@CHARSET "UTF-8";
+
+html, body {
+	height: 100%;
+}
+
+@media (min-width: 768px) {
+	.container {
+	    min-height: 100%;
+	    position: relative;
+	    padding-bottom: 50px;
+	}
+	
+	footer {
+		height: 50px;
+		position: absolute;
+		bottom: 0;
+	}
+}
+
+
+
+.add{background: #333; padding: 10%; height: 300px;}
+
+.nav-sidebar { 
+    width: 100%;
+    padding: 30px 0; 
+    border-right: 1px solid #ddd;
+}
+.nav-sidebar a {
+    color: #333;
+    -webkit-transition: all 0.08s linear;
+    -moz-transition: all 0.08s linear;
+    -o-transition: all 0.08s linear;
+    transition: all 0.08s linear;
+}
+.nav-sidebar .active a { 
+    cursor: default;
+    background-color: #0b56a8; 
+    color: #fff; 
+}
+.nav-sidebar .active a:hover {
+    background-color: #0080ff;   
+}
+.nav-sidebar .text-overflow a,
+.nav-sidebar .text-overflow .media-body {
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis; 
+}
