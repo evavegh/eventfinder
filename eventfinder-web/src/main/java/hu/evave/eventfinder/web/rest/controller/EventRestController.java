@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.evave.eventfinder.web.model.Event;
-import hu.evave.eventfinder.web.model.Location;
 import hu.evave.eventfinder.web.repository.EventRepository;
 import hu.evave.eventfinder.web.rest.request.EventRestRequest;
 import hu.evave.eventfinder.web.rest.resource.EventResource;
@@ -28,11 +27,13 @@ public class EventRestController {
 			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public List<EventResource> findByTypeLocationKeyword(EventRestRequest request) {
 
-		Location location = new Location();
-		location.setCountry(request.getCountry());
-
-		List<Event> events = eventRepository.findByTypeLocationKeywordQueryDsl(request.getTypes(), location,
-				request.getKeyword());
+//		Location location = new Location();
+//		location.setCountry(request.getCountry());
+//
+//		List<Event> events = eventRepository.findByTypeLocationKeywordQueryDsl(request.getTypes(), location,
+//				request.getKeyword());
+		
+		List<Event> events = eventRepository.findAll();
 
 		return eventListToEventResourceList(events);
 	}

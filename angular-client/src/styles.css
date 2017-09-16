@@ -1,1 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+body {
+	padding: 2em 23em;
+	background: lightgray;
+}
+
+.nav {
+  padding: 1rem;
+  text-align: center;
+  background-color: #ffa500;
+}
+.nav ul li {
+  display: inline;
+  font-weight: 700;
+}
+.menu-btn {
+  padding: 1rem;
+}
+.menu-btn:hover {
+  background-color: #ee82ee;
+}
+.active-btn {
+  background-color: #00f;
+}
