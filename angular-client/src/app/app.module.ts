@@ -12,13 +12,18 @@ import { CollapseModule } from 'ngx-bootstrap';
 import {RouterModule, Routes, Router} from '@angular/router';
 import { SettingsComponent } from './settings/settings.component';
 import { EventComponent } from './event/event.component';
+import { TruncatePipe } from './pipe';
+import { MapComponent } from './event/map/map.component';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
     SettingsComponent,
-    EventComponent
+    EventComponent,
+    TruncatePipe,
+    MapComponent
   ],
   imports: [
     BrowserModule,
@@ -35,9 +40,13 @@ import { EventComponent } from './event/event.component';
     RouterModule.forRoot([
       {path: 'home', component: MenuComponent},
       {path: 'settings', component: SettingsComponent},
-      {path: 'events', component: EventComponent}
+      {path: 'events', component: EventComponent},
+      {path: 'map', component: MapComponent}
     ]),
-    RouterModule
+    RouterModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBkVggQNc7YWPsjl5tZ5jgQlkkvG_U20vc'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

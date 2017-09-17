@@ -1,4 +1,22 @@
 <h2>Events</h2>
-<md-list>
-    <md-list-item *ngFor="let event of events"> {{event.id}} {{event.name}} <br></md-list-item>
-</md-list>
+
+<div class="row">
+	<div class="card card-outline-secondary col-lg-4 col-sm-6 col-xs-12"
+		*ngFor="let event of events">
+		<div class="card-block">
+			<h4 class="card-title">{{event.name}}</h4>
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item">{{event.summary | limitTo: 100}}</li>
+				<li class="list-group-item">{{event.location.name}}</li>
+				<li class="list-group-item">{{event.location.zipCode}} {{event.location.city}},
+					{{event.location.address}}</li>
+				<li class="list-group-item">{{event.startsAt}}</li>
+			</ul>
+			<div class="card-block">
+				<a href="#" class="card-link">Show map</a> <a href="#"
+					class="card-link">Show more</a>
+			</div>
+		</div>
+	</div>
+
+</div>

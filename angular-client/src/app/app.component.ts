@@ -10,7 +10,7 @@ import 'rxjs/add/operator/map';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'New app';
+  title = 'Eventfinder';
 
 
   myData: Array<any>;

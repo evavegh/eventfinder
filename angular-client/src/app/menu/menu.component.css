@@ -32,3 +32,7 @@ ul {
 .nav > li > a {
 	padding: 0px;
 }
+
+.bg-faded {
+	background-color: #1a2580;
+}
