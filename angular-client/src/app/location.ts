@@ -12,7 +12,7 @@ export class Location {
   ) {}
 
   toString() {
-    return JSON.stringify(this);
+    return this.zipCode + ' ' + this.city + ', ' + this.address;
   }
 
 }

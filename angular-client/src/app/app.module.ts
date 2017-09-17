@@ -13,7 +13,7 @@ import {RouterModule, Routes, Router} from '@angular/router';
 import { SettingsComponent } from './settings/settings.component';
 import { EventComponent } from './event/event.component';
 import { TruncatePipe } from './pipe';
-import { MapComponent } from './event/map/map.component';
+import { MapComponent } from './map/map.component';
 import { AgmCoreModule } from '@agm/core';
 
 @NgModule({

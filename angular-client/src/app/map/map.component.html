@@ -1,0 +1,14 @@
+<agm-map [latitude]="lat" [longitude]="lon">
+  <agm-marker *ngFor="let event of events" [latitude]="event.location.lat" [longitude]="event.location.lon" [openInfoWindow]="true">
+  	<agm-info-window id="infoWindow" [maxWidth]="250">
+  		<div class='agm-info-window-content'>
+  			<h4>{{event.name}}</h4>
+  			<p>{{event.location.name}}</p>
+  			<p>{{event.location.zipCode}} {{event.location.city}}, {{event.location.address}}</p>
+  			<p>{{event.startsAt}}</p>
+  			<p>{{event.summary | limitTo: 100}}</p>
+  			<a href="#">See more</a>
+  		</div>
+  	</agm-info-window>
+  </agm-marker>
+</agm-map>
