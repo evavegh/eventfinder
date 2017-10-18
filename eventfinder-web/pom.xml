@@ -68,7 +68,6 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-			
 		</plugins>
 
 	</build>
@@ -147,9 +146,10 @@
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 		</dependency>
-
-
-
-
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.7.0</version>
+		</dependency>
 	</dependencies>
 </project>
