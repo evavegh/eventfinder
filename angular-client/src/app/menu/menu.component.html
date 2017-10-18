@@ -1,9 +1,20 @@
 <nav class="navbar navbar-light bg-faded">
 
-			<ul class="nav flex-column">
-				<li class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="events">Events</a></li>
-				<li class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="#">Home</a></li>
-				<li class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="map">Map</a></li>
-				<li class="nav-item" [routerLinkActive]="['active']"><a class="nav-link" routerLink="settings">Settings</a></li>
-			</ul>
+	<ul class="nav flex-column">
+		<li class="nav-item" routerLinkActive="active"><a
+			class="nav-link" routerLink="events">Events</a></li>
+		<li class="nav-item" routerLinkActive="active"><a
+			class="nav-link" routerLink="map/0">Map</a></li>
+		<li class="nav-item" routerLinkActive="active"><a
+			class="nav-link" routerLink="settings" *ngIf="isAuthenticated()">Settings</a></li>
+		<li class="nav-item" routerLinkActive="active" *ngIf="!isAuthenticated()"><a
+			class="nav-link" routerLink="login">Login</a></li>
+		<li class="nav-item">
+			<form ngNoForm action="http://localhost:4200/eventfinder/logout" method="post" *ngIf="isAuthenticated()">
+				<input type="hidden" name="redirect" value="http://localhost:4200/events" />
+				<input type="submit" value="Log out"
+					class="btn-link pull-left"/>
+			</form>
+		</li>
+	</ul>
 </nav>

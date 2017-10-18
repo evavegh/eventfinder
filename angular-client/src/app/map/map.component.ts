@@ -1,6 +1,6 @@
 import {EventService} from '../event.service';
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
 
 import {Event} from '../event';
 
@@ -9,22 +9,19 @@ import {Event} from '../event';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, OnDestroy {
 
   lat = 47.5011151657;
   lon = 19.0531965145;
   events: Event[];
+  id: string;
+  private sub: any;
 
   infoWindowOpened = null;
 
-  constructor(private router: Router, private eventService: EventService) {}
-
-  ngOnInit() {
-    this.eventService.getEvents().then(events => this.events = events);
-  }
+  constructor(private route: ActivatedRoute, private router: Router, private eventService: EventService) {}
 
   clickedMarker(infoWindow) {
-    console.log('yey');
     if (this.infoWindowOpened === infoWindow) {
       return;
     }
@@ -32,6 +29,22 @@ export class MapComponent implements OnInit {
       this.infoWindowOpened.close();
     }
     this.infoWindowOpened = infoWindow;
+  }
+
+  ngOnInit() {
+    this.sub = this.route.params.subscribe(params => {
+      this.id = params['id'];
+      console.log(this.id);
+      if (this.id === '0') {
+        this.eventService.getEvents().then(events => this.events = events);
+      } else {
+        this.eventService.getEventById(this.id).then(event => this.events = [event]);
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
 }

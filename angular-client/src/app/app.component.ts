@@ -1,4 +1,5 @@
-import { EventService } from './event.service';
+import {EventService} from './event.service';
+import {SecurityService} from './security.service';
 import {Component} from '@angular/core';
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -15,11 +16,10 @@ export class AppComponent {
 
   myData: Array<any>;
 
-  constructor(private http: Http) {
+  constructor(private securityService: SecurityService) {
 
-    this.http.get('https://jsonplaceholder.typicode.com/photos')
-      .map(response => response.json())
-      .subscribe(res => this.myData = res);
+    securityService.init();
 
   }
+
 }

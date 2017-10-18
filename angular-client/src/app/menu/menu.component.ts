@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {SecurityService} from '../security.service';
+import {Component, OnInit} from '@angular/core';
 import {RouterModule, Routes, Router} from '@angular/router';
 
 @Component({
@@ -11,9 +12,13 @@ export class MenuComponent implements OnInit {
 
 
 
- constructor(private router: Router) {}
+  constructor(private router: Router, private securityService: SecurityService) {}
 
   ngOnInit() {
+  }
+
+  isAuthenticated(): boolean {
+    return this.securityService.isAuthenticated();
   }
 
 }
