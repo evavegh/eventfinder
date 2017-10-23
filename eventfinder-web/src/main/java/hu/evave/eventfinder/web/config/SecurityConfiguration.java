@@ -31,7 +31,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private static final String ROLES_QUERY = "SELECT u.name,r.role FROM user_role r, user u WHERE u.name=? AND u.id=r.user_id";
 
 	private DataSource dataSource;
-	private UserDetailsService userDetailsService;
+	
+	@Autowired
+	UserDetailsService userDetailsService;
 
 	@Autowired
 	public SecurityConfiguration(DataSource dataSource, UserDetailsService userDetailsService) {
@@ -127,5 +129,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		}
 		
 	}
+	
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+    }
 
 }

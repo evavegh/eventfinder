@@ -16,6 +16,7 @@ import {DetailsComponent} from './details/details.component';
 import { LoginComponentComponent } from './login-component/login-component.component';
 import { SecurityService } from './security.service';
 import {DatePickerModule} from 'angular-io-datepicker';
+import { RegistrationComponent } from './registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {DatePickerModule} from 'angular-io-datepicker';
     EndDatePipe,
     MapComponent,
     DetailsComponent,
-    LoginComponentComponent
+    LoginComponentComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +55,8 @@ import {DatePickerModule} from 'angular-io-datepicker';
         path: 'map/:id', component: MapComponent
       },
       {path: 'details/:id', component: DetailsComponent},
-      {path: 'login', component: LoginComponentComponent}
+      {path: 'login', component: LoginComponentComponent},
+      {path: 'registration', component: RegistrationComponent}
     ]),
     RouterModule,
     AgmCoreModule.forRoot({

@@ -102,5 +102,16 @@ public class EventResource {
 	public String getFbUrl() {
 		return fbUrl;
 	}
+	
+	public static List<EventResource> eventListToEventResourceList(List<Event> events) {
+
+		List<EventResource> result = new ArrayList<>();
+
+		for (Event event : events) {
+			result.add(new EventResource(event));
+		}
+
+		return result;
+	}
 
 }

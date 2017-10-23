@@ -11,6 +11,19 @@ spring:
     password: admin
     driver-class-name: com.mysql.jdbc.Driver
     sql-script-encoding: UTF-8
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: eventfinder.acc@gmail.com
+    password: Alma1234
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          ssl.trust: smtp.gmail.com
 logging:
   level:
     org:

@@ -1,6 +1,5 @@
 package hu.evave.eventfinder.web.rest.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.evave.eventfinder.web.model.Event;
-import hu.evave.eventfinder.web.model.price.Currency;
 import hu.evave.eventfinder.web.model.type.EventType;
 import hu.evave.eventfinder.web.repository.EventRepository;
 import hu.evave.eventfinder.web.rest.request.EventRestRequest;
@@ -45,7 +42,7 @@ public class EventRestController {
 		
 		List<Event> events = eventRepository.findAll();
 
-		return eventListToEventResourceList(events);
+		return EventResource.eventListToEventResourceList(events);
 	}
 	
 	@RequestMapping(
@@ -74,17 +71,6 @@ public class EventRestController {
 		model.put("event", event);
 		return event;
 
-	}
-
-	public List<EventResource> eventListToEventResourceList(List<Event> events) {
-
-		List<EventResource> result = new ArrayList<>();
-
-		for (Event event : events) {
-			result.add(new EventResource(event));
-		}
-
-		return result;
 	}
 
 }

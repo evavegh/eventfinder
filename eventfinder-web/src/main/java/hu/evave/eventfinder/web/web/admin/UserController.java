@@ -2,7 +2,12 @@ package hu.evave.eventfinder.web.web.admin;
 
 import java.util.Map;
 
+//import javax.mail.MessagingException;
+//import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.mail.javamail.JavaMailSender;
+//import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -26,37 +31,42 @@ public class UserController {
 
 	@Autowired
 	private UserRepository userRepository;
-	
-    @Autowired
-    private UserValidator userValidator;
 
-    @Autowired
+	@Autowired
+	private UserValidator userValidator;
+
+	@Autowired
 	private UserService userService;
 
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String registration(Map<String, Object> model) {
-    	User user = new User();
-    	user.setId(-1L);
-    	user.setPassword("password");
-    	user.addRole(Role.ADMIN);
-    	userService.save(user);
-    	model.put("userForm", user);
-        return "registration";
-    }
-    
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
-        userValidator.validate(userForm, bindingResult);
-       
-        if (bindingResult.hasErrors()) {
-        	System.out.println(bindingResult.getAllErrors().toString());
-            return "registration";
-        }
-        
-        userService.save(userForm);
+	@RequestMapping(value = "/registration", method = RequestMethod.GET)
+	public String registration(Map<String, Object> model) {
+		User user = new User();
+		user.setId(-1L);
+		user.setPassword("password");
+		user.addRole(Role.ADMIN);
+		userService.save(user);
+		model.put("userForm", user);
+		System.out.println(user.getName() + user.getId());
+		return "registration";
+	}
 
-        return "redirect:/login";
-    }  
+	@RequestMapping(value = "/registration", method = RequestMethod.POST)
+	public String registration(@RequestBody User userForm, BindingResult bindingResult, Model model) {
+		
+		userValidator.validate(userForm, bindingResult);
+
+		if (bindingResult.hasErrors()) {
+			System.out.println(bindingResult.getAllErrors().toString());
+			return "registration";
+		}
+		
+		userForm.addRole(Role.REGISTERED);
+
+		userService.save(userForm);
+		userService.sendEmail(userForm);
+
+		return "redirect:/login";
+	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login(Model model) {
@@ -77,8 +87,9 @@ public class UserController {
 	@RequestMapping(value = "/settings", method = RequestMethod.POST)
 	public @ResponseBody User edit(@RequestBody User user) {
 		System.out.println("user settings");
-		userRepository.save(user);
+		userService.changePassword(user);
 		return user;
 
 	}
+
 }

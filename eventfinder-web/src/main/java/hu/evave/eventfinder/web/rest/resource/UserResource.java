@@ -10,6 +10,7 @@ public class UserResource {
     private long id;
     private String name;
     private String email;
+    private String password;
     private List<String> roles;
     
     public UserResource() {
@@ -19,6 +20,7 @@ public class UserResource {
 		this.id = user.getId();
 		this.name = user.getName();
 		this.email = user.getEmail();
+		this.password = user.getPassword();
 		this.roles = user.getRoles().stream().map(r -> r.name()).collect(Collectors.toList());
 	}
 
@@ -46,6 +48,16 @@ public class UserResource {
 	public void setRoles(List<String> roles) {
 		this.roles = roles;
 	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	
     
     
 

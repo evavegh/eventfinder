@@ -5,7 +5,8 @@ import {Http, RequestOptions, URLSearchParams, Headers} from '@angular/http';
 @Injectable()
 export class SecurityService {
 
-  private url = 'http://localhost:4200/eventfinder/rest/currentUser';
+  private currentUserUrl = 'http://localhost:4200/eventfinder/rest/currentUser';
+  private registrationUrl = 'http://localhost:4200/eventfinder/registration';
   private user: User;
 
   constructor(private http: Http) {
@@ -16,7 +17,7 @@ export class SecurityService {
   }
 
   private getCurrentUser(): Promise<User> {
-    return this.http.get(this.url)
+    return this.http.get(this.currentUserUrl)
       .toPromise()
       .then(response => this.parseUser(response.text()))
       .catch(this.handleError);
@@ -47,6 +48,14 @@ export class SecurityService {
     const headers = new Headers({'Content-Type': 'application/json'});
     const options = new RequestOptions({headers: headers});
     return this.http.post('http://localhost:4200/eventfinder/settings', user, options).toPromise()
+      .then(response => this.parseUser(response.text()))
+      .catch(this.handleError);
+  }
+
+  public registerUser(user: User) {
+    const headers = new Headers({'Content-Type': 'application/json'});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post(this.registrationUrl, user, options).toPromise()
       .then(response => this.parseUser(response.text()))
       .catch(this.handleError);
   }

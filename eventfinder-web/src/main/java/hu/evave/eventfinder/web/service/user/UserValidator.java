@@ -13,7 +13,7 @@ import hu.evave.eventfinder.web.repository.UserRepository;
 public class UserValidator implements Validator {
 
 	@Autowired
-	private UserRepository userRepository;
+	UserRepository userRepository;
 
 	@Override
 	public boolean supports(Class<?> aClass) {

@@ -17,9 +17,8 @@
 </div>
 <div class="row searchFields">
 	<label>Categories</label>
-	<div  *ngFor="let type of types">
-	<label>{{type.name}}</label>
-	<input type="checkbox" value="">
+	<div *ngFor="let type of types">
+		<label>{{type.name}}</label> <input type="checkbox" value="">
 	</div>
 </div>
 <div class="row">
@@ -27,7 +26,10 @@
 		class="card card-outline-secondary col-lg-4 col-sm-6 col-xs-12 text-center"
 		*ngFor="let event of events | NamePipe: nameString | LocationPipe: locationString | CityPipe: cityString | StartDatePipe: startDate | EndDatePipe: endDate">
 		<div class="card-block">
-			<h4 class="card-title">{{event.name}}</h4>
+			<div class="row">
+				<h4 class="card-title">{{event.name}}</h4>
+
+			</div>
 			<ul class="list-group list-group-flush">
 				<li class="list-group-item">{{event.summary | limitTo: 100}}</li>
 				<li class="list-group-item">{{event.location.name}}</li>
@@ -39,6 +41,11 @@
 				<a class="card-link" [routerLink]="['../', 'map', event.id]">Show
 					map</a> <a class="card-link" routerLinkActive="active"
 					[routerLink]="['../', 'details', event.id]">Show more</a>
+			</div>
+			<div class="card-block">
+				<button type="button" class="btn btn-default btn-sm">
+					<span class="glyphicon glyphicon-star-empty"></span> Save
+				</button>
 			</div>
 		</div>
 	</div>

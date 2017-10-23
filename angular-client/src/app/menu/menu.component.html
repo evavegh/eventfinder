@@ -9,6 +9,8 @@
 			class="nav-link" routerLink="settings" *ngIf="isAuthenticated()">Settings</a></li>
 		<li class="nav-item" routerLinkActive="active" *ngIf="!isAuthenticated()"><a
 			class="nav-link" routerLink="login">Login</a></li>
+		<li class="nav-item" routerLinkActive="active" *ngIf="!isAuthenticated()"><a
+			class="nav-link" routerLink="registration">Register</a></li>
 		<li class="nav-item">
 			<form ngNoForm action="http://localhost:4200/eventfinder/logout" method="post" *ngIf="isAuthenticated()">
 				<input type="hidden" name="redirect" value="http://localhost:4200/events" />

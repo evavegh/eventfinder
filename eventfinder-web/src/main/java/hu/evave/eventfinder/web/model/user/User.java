@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
@@ -45,6 +46,10 @@ public class User {
 	@ManyToMany
 	@JoinTable(name = "user_saved_event", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "event_id"))
 	private List<Event> savedEvents;
+	
+	@OneToOne(mappedBy = "user")
+	@Cascade(value = { CascadeType.ALL })
+	private UserSettings userSettings = new UserSettings();
 
 	public User() {
 	}
@@ -62,8 +67,12 @@ public class User {
 		roles.add(role);
 	}
 
-	public void saveEvent(Event event) {
+	public void subscribeEvent(Event event) {
 		savedEvents.add(event);
+	}
+
+	public void unsubscribeEvent(Event event) {
+		savedEvents.remove(event);
 	}
 
 	public String getName() {
@@ -105,5 +114,15 @@ public class User {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
+
+	public List<Event> getSavedEvents() {
+		return savedEvents;
+	}
+
+	public UserSettings getUserSettings() {
+		return userSettings;
+	}
+	
+	
 
 }
