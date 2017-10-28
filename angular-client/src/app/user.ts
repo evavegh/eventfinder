@@ -1,3 +1,5 @@
+import {Event} from './event';
+
 export class User {
 
   constructor(
@@ -5,7 +7,8 @@ export class User {
     public name: string,
     public email: string,
     public password: string,
-    public roles: string[]
+    public roles: string[],
+    public savedEvents: Event[]
   ) {}
 
 }

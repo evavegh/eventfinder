@@ -3,6 +3,12 @@
 	<label>Search</label>
 </div>
 <div class="row searchFields">
+	<div class="checkbox">
+		<label><input type="checkbox" [(ngModel)]="onlySaved"
+			id="onlySavedSearch">Show only saved events</label>
+	</div>
+</div>
+<div class="row searchFields">
 	<input type="text" [(ngModel)]="nameString" id="nameSearch"
 		placeholder="Name"> <input type="text"
 		[(ngModel)]="cityString" id="citySearch" placeholder="City"> <input
@@ -24,7 +30,7 @@
 <div class="row">
 	<div
 		class="card card-outline-secondary col-lg-4 col-sm-6 col-xs-12 text-center"
-		*ngFor="let event of events | NamePipe: nameString | LocationPipe: locationString | CityPipe: cityString | StartDatePipe: startDate | EndDatePipe: endDate">
+		*ngFor="let event of events | NamePipe: nameString | LocationPipe: locationString | CityPipe: cityString | StartDatePipe: startDate | EndDatePipe: endDate | OnlySavedPipe: getSavedEvents():onlySaved">
 		<div class="card-block">
 			<div class="row">
 				<h4 class="card-title">{{event.name}}</h4>
@@ -42,9 +48,16 @@
 					map</a> <a class="card-link" routerLinkActive="active"
 					[routerLink]="['../', 'details', event.id]">Show more</a>
 			</div>
-			<div class="card-block">
-				<button type="button" class="btn btn-default btn-sm">
-					<span class="glyphicon glyphicon-star-empty"></span> Save
+			<div class="card-block" *ngIf="isAuthenticated() && !isSaved(event)">
+				<button type="button" class="btn btn-default btn-sm"
+					(click)="onSave(event)">
+					<span class="glyphicon glyphicon-star"></span> Save
+				</button>
+			</div>
+			<div class="card-block" *ngIf="isAuthenticated() && isSaved(event)">
+				<button type="button" class="btn btn-default btn-sm"
+					(click)="onForget(event)">
+					<span class="glyphicon glyphicon-star-empty"></span> Forget
 				</button>
 			</div>
 		</div>

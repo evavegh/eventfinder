@@ -6,7 +6,7 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import hu.evave.eventfinder.web.model.user.User;
@@ -19,7 +19,7 @@ public class UserService {
 	UserRepository userRepository;
 
 	@Autowired
-	BCryptPasswordEncoder encoder;
+	PasswordEncoder encoder;
 
 	@Autowired
 	JavaMailSender mailSender;
@@ -58,7 +58,8 @@ public class UserService {
 	}
 
 	public void sendEmail(User user) {
-		prepareAndSend(user.getEmail(), "Dear User!\n\nYour registration was successful.\nYour new account name: " + user.getName() + "\n\nThank you for choosing us!\nEventFinder");
+		prepareAndSend(user.getEmail(),
+				"Dear User!\n\nYour registration was successful.\nYour new account name: " + user.getName() + "\n\nThank you for choosing us!\nEventFinder");
 	}
 
 	private void prepareAndSend(String recipient, String text) {

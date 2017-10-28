@@ -1,8 +1,10 @@
 package hu.evave.eventfinder.web.rest.resource;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import hu.evave.eventfinder.web.model.Event;
 import hu.evave.eventfinder.web.model.user.User;
 
 public class UserResource {
@@ -12,6 +14,7 @@ public class UserResource {
     private String email;
     private String password;
     private List<String> roles;
+    private List<EventResource> savedEvents;
     
     public UserResource() {
 	}
@@ -22,6 +25,11 @@ public class UserResource {
 		this.email = user.getEmail();
 		this.password = user.getPassword();
 		this.roles = user.getRoles().stream().map(r -> r.name()).collect(Collectors.toList());
+		
+		this.savedEvents = new ArrayList<>();
+		for(Event event : user.getSavedEvents()) {
+			this.savedEvents.add(new EventResource(event));
+		}
 	}
 
 	public long getId() {
@@ -56,9 +64,14 @@ public class UserResource {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
-    
+
+	public List<EventResource> getSavedEvents() {
+		return savedEvents;
+	}
+
+	public void setSavedEvents(List<EventResource> savedEvents) {
+		this.savedEvents = savedEvents;
+	}
     
 
 }

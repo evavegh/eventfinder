@@ -9,10 +9,11 @@ import {RouterModule, Routes, Router} from '@angular/router';
 import {SettingsComponent} from './settings/settings.component';
 import {EventComponent} from './event/event.component';
 import {TruncatePipe} from './pipe';
-import {NamePipe, LocationPipe, CityPipe, StartDatePipe, EndDatePipe} from './SearchPipe';
+import {NamePipe, LocationPipe, CityPipe, StartDatePipe, EndDatePipe, OnlySavedPipe} from './SearchPipe';
 import {MapComponent} from './map/map.component';
 import {AgmCoreModule} from '@agm/core';
 import {DetailsComponent} from './details/details.component';
+import { EventService } from './event.service';
 import { LoginComponentComponent } from './login-component/login-component.component';
 import { SecurityService } from './security.service';
 import {DatePickerModule} from 'angular-io-datepicker';
@@ -30,6 +31,7 @@ import { RegistrationComponent } from './registration/registration.component';
     CityPipe,
     StartDatePipe,
     EndDatePipe,
+    OnlySavedPipe,
     MapComponent,
     DetailsComponent,
     LoginComponentComponent,
@@ -64,7 +66,8 @@ import { RegistrationComponent } from './registration/registration.component';
     })
   ],
   providers: [
-  SecurityService],
+  SecurityService,
+  EventService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

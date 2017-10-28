@@ -1,0 +1,31 @@
+<form class="form-horizontal" method="post" (ngSubmit)="onSubmit()">
+	<input type="hidden" [(ngModel)]="user.id" name="id" />
+
+	<div class="form-group">
+		<label for="name" class="col-sm-2 control-label">Account name</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" id="name"
+				required="required" [(ngModel)]="user.name" name="name" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="email" class="col-sm-2 control-label">Email address</label>
+		<div class="col-sm-10">
+			<input type="email" class="form-control" id="email"
+				required="required" [(ngModel)]="user.email" name="email" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="password" class="col-sm-2 control-label">Password</label>
+		<div class="col-sm-10">
+			<input type="password" class="form-control" id="password"
+				required="required" [(ngModel)]="user.password" name="password" />
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<button type="submit" class="btn btn-primary">Register</button>
+		</div>
+	</div>
+</form>

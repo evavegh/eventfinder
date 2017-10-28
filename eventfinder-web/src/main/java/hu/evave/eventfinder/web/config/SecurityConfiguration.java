@@ -1,8 +1,6 @@
 package hu.evave.eventfinder.web.config;
 
 import java.io.IOException;
-import java.net.URL;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +16,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
@@ -31,7 +30,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private static final String ROLES_QUERY = "SELECT u.name,r.role FROM user_role r, user u WHERE u.name=? AND u.id=r.user_id";
 
 	private DataSource dataSource;
-	
+
 	@Autowired
 	UserDetailsService userDetailsService;
 
@@ -42,8 +41,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
-	public BCryptPasswordEncoder bCryptPasswordEncoder() {
-		return new BCryptPasswordEncoder();
+	public PasswordEncoder passwordEncoder() {
+		//return new BCryptPasswordEncoder();
+		return NoOpPasswordEncoder.getInstance();
 	}
 
 	@Override
@@ -53,10 +53,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.jdbcAuthentication()
 				.dataSource(dataSource)
 					.usersByUsernameQuery(USERS_QUERY)
-					.authoritiesByUsernameQuery(ROLES_QUERY);
+					.authoritiesByUsernameQuery(ROLES_QUERY)
+					.passwordEncoder(passwordEncoder());
 		// @formatter:on
 
-		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+		auth.userDetailsService(userDetailsService);
 	}
 
 	@Override
@@ -101,9 +102,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				super.onAuthenticationSuccess(request, response, authentication);
 			}
 		}
-		
+
 	}
-	
+
 	private final class FailureHandler implements AuthenticationFailureHandler {
 
 		@Override
@@ -112,14 +113,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			String redirectUrl = request.getParameter("redirect");
 			response.sendRedirect(redirectUrl);
 		}
-		
+
 	}
-	
-	
+
 	private final class LogoutSuccessHandlerCustom implements LogoutSuccessHandler {
 
 		@Override
-		public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+		public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
+				throws IOException, ServletException {
 			String redirectUrl = request.getParameter("redirect");
 			if (redirectUrl != null) {
 				response.sendRedirect(redirectUrl);
@@ -127,12 +128,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				response.sendRedirect("http://localhost:4200/eventfinder");
 			}
 		}
-		
+
 	}
-	
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
-    }
 
 }

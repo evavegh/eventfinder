@@ -80,3 +80,24 @@ export class EndDatePipe implements PipeTransform {
     return value;
   }
 }
+
+@Pipe({
+  name: 'OnlySavedPipe'
+})
+export class OnlySavedPipe implements PipeTransform {
+  transform(events: any, savedEvents: any, input: boolean) {
+    const result: Event[] = [];
+    if (input) {
+      for (let i = 0; i < events.length; i++) {
+        for (let j = 0; j < savedEvents.length; j++) {
+          if (savedEvents[j].id === events[i].id) {
+            result.push(events[i]);
+          }
+        }
+      }
+    } else {
+      return events;
+    }
+    return result;
+  }
+}

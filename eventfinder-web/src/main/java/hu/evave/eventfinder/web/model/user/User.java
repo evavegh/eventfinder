@@ -44,6 +44,7 @@ public class User {
 	private Set<Role> roles;
 
 	@ManyToMany
+	@Cascade(value = { CascadeType.ALL })
 	@JoinTable(name = "user_saved_event", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "event_id"))
 	private List<Event> savedEvents;
 	
@@ -68,7 +69,9 @@ public class User {
 	}
 
 	public void subscribeEvent(Event event) {
-		savedEvents.add(event);
+		if(!savedEvents.contains(event)) {			
+			savedEvents.add(event);
+		}
 	}
 
 	public void unsubscribeEvent(Event event) {
