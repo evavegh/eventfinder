@@ -1,5 +1,6 @@
 package hu.evave.eventfinder.web.model;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -10,11 +11,13 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -84,6 +87,9 @@ public class Event {
 	@ManyToOne
 	@JoinColumn(name = "created_by")
 	private User createdBy;
+	
+	@ManyToMany(mappedBy = "savedEvents", fetch = FetchType.LAZY)
+	private List<User> subscribedUsers;
 
 	public Event() {
 	}
@@ -231,6 +237,10 @@ public class Event {
 
 	public void setRetiredPrice(Price retiredPrice) {
 		this.retiredPrice = retiredPrice;
+	}
+	
+	public List<User> getSubscribedUsers() {
+		return Collections.unmodifiableList(subscribedUsers);
 	}
 
 	@Override

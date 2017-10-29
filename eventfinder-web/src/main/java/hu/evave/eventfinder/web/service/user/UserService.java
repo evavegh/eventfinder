@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import hu.evave.eventfinder.web.model.user.User;
 import hu.evave.eventfinder.web.repository.UserRepository;
+import hu.evave.eventfinder.web.service.EmailService;
 
 @Service
 public class UserService {
@@ -22,7 +23,7 @@ public class UserService {
 	PasswordEncoder encoder;
 
 	@Autowired
-	JavaMailSender mailSender;
+	EmailService emailService;
 
 	public UserService() {
 	}
@@ -58,22 +59,9 @@ public class UserService {
 	}
 
 	public void sendEmail(User user) {
-		prepareAndSend(user.getEmail(),
+		emailService.prepareAndSend(user.getEmail(),
 				"Dear User!\n\nYour registration was successful.\nYour new account name: " + user.getName() + "\n\nThank you for choosing us!\nEventFinder");
 	}
 
-	private void prepareAndSend(String recipient, String text) {
-		MimeMessage message = mailSender.createMimeMessage();
-		MimeMessageHelper helper = new MimeMessageHelper(message);
-		try {
-			helper.setTo(recipient);
-			helper.setText(text);
-			helper.setSubject("Registration successful");
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		}
-
-		mailSender.send(message);
-	}
 
 }
