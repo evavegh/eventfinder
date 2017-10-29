@@ -87,6 +87,9 @@ export class EndDatePipe implements PipeTransform {
 export class OnlySavedPipe implements PipeTransform {
   transform(events: any, savedEvents: any, input: boolean) {
     const result: Event[] = [];
+    if (savedEvents == null) {
+      return events;
+    }
     if (input) {
       for (let i = 0; i < events.length; i++) {
         for (let j = 0; j < savedEvents.length; j++) {

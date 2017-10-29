@@ -2,7 +2,7 @@
 <div class="row">
 	<label>Search</label>
 </div>
-<div class="row searchFields">
+<div class="row searchFields" *ngIf="isAuthenticated()">
 	<div class="checkbox">
 		<label><input type="checkbox" [(ngModel)]="onlySaved"
 			id="onlySavedSearch">Show only saved events</label>

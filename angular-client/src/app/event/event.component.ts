@@ -61,7 +61,10 @@ export class EventComponent implements OnInit {
   }
 
   public getSavedEvents() {
-    return this.securityService.getUser().savedEvents;
+    if (this.securityService.isAuthenticated()) {
+      return this.securityService.getUser().savedEvents;
+    }
+    return null;
   }
 }
 
