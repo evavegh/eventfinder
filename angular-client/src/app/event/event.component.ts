@@ -2,12 +2,12 @@ import {DetailsComponent} from '../details/details.component';
 import {EventService} from '../event.service';
 import {Component, OnInit, ViewChildren} from '@angular/core';
 import {Router} from '@angular/router';
-import {NamePipe, LocationPipe, CityPipe, StartDatePipe, EndDatePipe, OnlySavedPipe} from '../SearchPipe';
+import {NamePipe, LocationPipe, CityPipe, StartDatePipe, EndDatePipe, OnlySavedPipe, TypePipe} from '../SearchPipe';
 
-import {Event} from '../event';
+import {Event} from '../model/event';
 import {SecurityService} from '../security.service';
-import {Type} from '../type';
-import {User} from '../user';
+import {Type} from '../model/type';
+import {User} from '../model/user';
 
 @Component({
   selector: 'app-event',
@@ -26,13 +26,12 @@ export class EventComponent implements OnInit {
 
   ngOnInit() {
     this.eventService.getEvents().then(events => this.events = events);
+    this.eventService.getTypes().then(types => this.setTypes(types));
+  }
 
-    let typeStrings;
-    this.eventService.getTypes().then(types => typeStrings = types);
-
-
-    this.types = new Array<Type>();
-    //    typeStrings.forEach(type => this.types.push(new Type(type)));
+  setTypes(typeStrings: string[]) {
+    this.types = [];
+    typeStrings.forEach(t => this.types.push(new Type(t)));
   }
 
   routerOnDeactivate(next, prev) {
@@ -40,6 +39,7 @@ export class EventComponent implements OnInit {
   }
 
   public onSave(event: Event) {
+    console.log(event);
     this.eventService.saveEvent(event, this.securityService.getUser());
   }
 

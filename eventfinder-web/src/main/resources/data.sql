@@ -1,7 +1,12 @@
-INSERT INTO user (id, email, name, password) VALUES (1, 'user.email@address.com', 'Példa User', 'jelszó');
-INSERT INTO user (id, email, name, password) VALUES (2, 'user2.email@address.com', 'user2', 'p');
-INSERT INTO user (id, email, name, password) VALUES (3, 'user1.email@address.com', 'user1', 'password');
-INSERT INTO user (id, email, name, password) VALUES (4, 'eva.vegh.bp@gmail.com', 'x', 'x');
+INSERT INTO user_settings (id, email_notification_enabled, android_notification_enabled, event_notification_enabled, advertiser_notification_enabled, location_notification_enabled) VALUES (1, true, true, true, true, true);
+INSERT INTO user_settings (id, email_notification_enabled, android_notification_enabled, event_notification_enabled, advertiser_notification_enabled, location_notification_enabled) VALUES (2, true, true, true, true, true);
+INSERT INTO user_settings (id, email_notification_enabled, android_notification_enabled, event_notification_enabled, advertiser_notification_enabled, location_notification_enabled) VALUES (3, true, true, true, true, true);
+INSERT INTO user_settings (id, email_notification_enabled, android_notification_enabled, event_notification_enabled, advertiser_notification_enabled, location_notification_enabled) VALUES (4, true, true, true, true, true);
+
+INSERT INTO user (id, email, name, password, member_since, settings_id) VALUES (1, 'user.email@address.com', 'Példa User', 'jelszó', '2017-05-01 10:30:00', 1);
+INSERT INTO user (id, email, name, password, member_since, settings_id) VALUES (2, 'user2.email@address.com', 'user2', 'p', '2012-07-01 10:30:00', 2);
+INSERT INTO user (id, email, name, password, member_since, settings_id) VALUES (3, 'user1.email@address.com', 'user1', 'password', '2010-07-01 10:30:00', 3);
+INSERT INTO user (id, email, name, password, member_since, settings_id) VALUES (4, 'eva.vegh.bp@gmail.com', 'x', 'x', '2017-07-01 10:30:00', 4);
 
 INSERT INTO location (id, name, country, city, zip_code, address, lat, lon) VALUES (1, 'Csodák Palotája', 'Magyarország', 'Budapest', '1222', 'Nagytétényi út 37-43.', 47.40633500, 19.01517500);
 INSERT INTO location (id, name, country, city, zip_code, address, lat, lon) VALUES (2, NULL, 'Magyarország', 'Budapest', '1095', 'Komor Marcell u. 1.', 47.46970600, 19.07120800);

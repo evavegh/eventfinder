@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import hu.evave.eventfinder.web.model.Event;
+import hu.evave.eventfinder.web.model.Location;
 import hu.evave.eventfinder.web.model.user.User;
+import hu.evave.eventfinder.web.model.user.UserSettings;
 import hu.evave.eventfinder.web.repository.EventRepository;
 
 @Service
@@ -38,7 +40,7 @@ public class EventService {
 
 	@Scheduled(cron = "0 5 * * * *")
 	@Transactional
-	public void sendNotification() {
+	public void sendScheduledNotification() {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.HOUR, CONSTANT);
 		cal.set(Calendar.MINUTE, 0);
@@ -51,10 +53,10 @@ public class EventService {
 		cal.add(Calendar.MILLISECOND, -1);
 
 		Date startTo = cal.getTime();
-		sendNotification(startFrom, startTo);
+		sendNotificationByDate(startFrom, startTo);
 	}
 
-	private void sendNotification(Date startFrom, Date startTo) {
+	private void sendNotificationByDate(Date startFrom, Date startTo) {
 
 		List<Event> eventsToNotify = eventRepository.findByStartsAtBetween(startFrom, startTo);
 
@@ -91,6 +93,40 @@ public class EventService {
 		}
 
 		events.add(event);
+	}
+
+	@Transactional
+	public void sendCreateNotification(Event event) {
+		sendLocationNotification(event);
+		sendAdvertiserNotification(event);
+	}
+
+	private void sendAdvertiserNotification(Event event) {
+		User advertiser = event.getCreatedBy();
+		List<User> users = advertiser.getSubscribedUsers();
+
+		for (User user : users) {
+			UserSettings settings = user.getSettings();
+			if (settings.isEmailNotificationEnabled() && settings.isAdvertiserNotificationEnabled()) {
+				String message = "Dear " + user.getName() + "!\n\nYou might be interested in the following event created by " + advertiser.getName() + ": \n"
+						+ event.getName() + "\n" + event.getLocation().getName();
+				emailService.prepareAndSend(user.getEmail(), message);
+			}
+		}
+	}
+
+	private void sendLocationNotification(Event event) {
+		Location location = event.getLocation();
+		List<User> users = location.getSubscribedUsers();
+
+		for (User user : users) {
+			UserSettings settings = user.getSettings();
+			if (settings.isEmailNotificationEnabled() && settings.isAdvertiserNotificationEnabled()) {
+				String message = "Dear " + user.getName() + "!\n\nYou might be interested in the following event taken place in " + location.getName() + ": \n"
+						+ event.getName() + "\n" + event.getLocation().getAddress();
+				emailService.prepareAndSend(user.getEmail(), message);
+			}
+		}
 	}
 
 }

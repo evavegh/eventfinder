@@ -34,7 +34,7 @@ public class SecurityRestController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {
 			String name = authentication.getName();
-			return new UserResource(userService.getUserByName(name));
+			return UserResource.fromUser(userService.getUserByName(name));
 		}
 		return null;
 	}
@@ -47,7 +47,7 @@ public class SecurityRestController {
 		user.addRole(Role.ADMIN);
 //		userService.save(user);
 		model.put("userForm", user);
-		return new UserResource(user);
+		return UserResource.fromUser(user);
 	}
 
 }

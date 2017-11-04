@@ -2,12 +2,7 @@ package hu.evave.eventfinder.web.web.admin;
 
 import java.util.Map;
 
-//import javax.mail.MessagingException;
-//import javax.mail.internet.MimeMessage;
-
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.mail.javamail.JavaMailSender;
-//import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -30,7 +25,7 @@ public class UserController {
 
 	@Autowired
 	private UserRepository userRepository;
-
+	
 	@Autowired
 	private UserValidator userValidator;
 
@@ -51,13 +46,16 @@ public class UserController {
 
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public String registration(@RequestBody User userForm, BindingResult bindingResult, Model model) {
-		
+		System.out.println(userForm);
+		System.out.println(userForm.getId());
+		System.out.println(userForm.getName());
+		System.out.println(userForm.getEmail());
 		userValidator.validate(userForm, bindingResult);
 
-		if (bindingResult.hasErrors()) {
-			System.out.println(bindingResult.getAllErrors().toString());
-			return "registration";
-		}
+//		if (bindingResult.hasErrors()) {
+//			System.out.println(bindingResult.getAllErrors().toString());
+//			return "registration";
+//		}
 		
 		userForm.addRole(Role.REGISTERED);
 
@@ -85,8 +83,7 @@ public class UserController {
 
 	@RequestMapping(value = "/settings", method = RequestMethod.POST)
 	public @ResponseBody User edit(@RequestBody User user) {
-		System.out.println("user settings");
-		userService.changePassword(user);
+		userService.save(user);
 		return user;
 
 	}

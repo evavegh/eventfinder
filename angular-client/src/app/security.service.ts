@@ -1,4 +1,4 @@
-import {User} from './user';
+import {User} from './model/user';
 import {Injectable} from '@angular/core';
 import {Http, RequestOptions, URLSearchParams, Headers} from '@angular/http';
 
@@ -45,6 +45,7 @@ export class SecurityService {
   }
 
   public postUser(user: User) {
+    console.log(user);
     const headers = new Headers({'Content-Type': 'application/json'});
     const options = new RequestOptions({headers: headers});
     return this.http.post('http://localhost:4200/eventfinder/settings', user, options).toPromise()

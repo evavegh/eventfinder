@@ -2,7 +2,8 @@ import {EventService} from '../event.service';
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 
-import {Event} from '../event';
+import {Event} from '../model/event';
+import {Location} from '../model/location';
 
 @Component({
   selector: 'app-map',
@@ -16,6 +17,7 @@ export class MapComponent implements OnInit, OnDestroy {
   events: Event[];
   id: string;
   private sub: any;
+  valami: any;
 
   infoWindowOpened = null;
 
@@ -41,7 +43,9 @@ export class MapComponent implements OnInit, OnDestroy {
         this.eventService.getEventById(this.id).then(event => this.events = [event]);
       }
     });
+
   }
+
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();

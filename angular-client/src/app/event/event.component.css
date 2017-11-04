@@ -1,3 +1,8 @@
 .searchFields {
 	padding-bottom:10px;
 }
+
+.checkboxSpan {
+	width:10em;
+	display:inline-block;
+}

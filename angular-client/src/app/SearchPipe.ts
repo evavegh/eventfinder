@@ -1,3 +1,4 @@
+import {Type} from './model/type';
 import {Pipe, PipeTransform} from '@angular/core';
 import {MomentParseFunction} from 'angular-io-datepicker';
 import * as moment from 'moment';
@@ -54,14 +55,10 @@ export class CityPipe implements PipeTransform {
   name: 'StartDatePipe'
 })
 export class StartDatePipe implements PipeTransform {
-  transform(value: any, input: Date) {
+  transform(value: any, input: any) {
     if (input) {
-      return value.filter(function(el: any) {
-        console.log('now');
-        console.log(el.startsAt);
-        console.log(input);
-        return el.startsAt.getDate > input.getDate;
-      });
+      const inputDate = new Date(input.format('YYYY-MM-DDTHH:mm:ssZ'));
+      return value.filter(el => new Date(el.endsAt).getTime() >= inputDate.getTime());
     }
     return value;
   }
@@ -71,11 +68,10 @@ export class StartDatePipe implements PipeTransform {
   name: 'EndDatePipe'
 })
 export class EndDatePipe implements PipeTransform {
-  transform(value: any, input: Date) {
+  transform(value: any, input: any) {
     if (input) {
-      return value.filter(function(el: any) {
-        return el.endsAt < input;
-      });
+      const inputDate = new Date(input.format('YYYY-MM-DDTHH:mm:ssZ'));
+      return value.filter(el => new Date(el.endsAt).getTime() <= inputDate.getTime());
     }
     return value;
   }
@@ -104,3 +100,38 @@ export class OnlySavedPipe implements PipeTransform {
     return result;
   }
 }
+
+@Pipe({
+  name: 'TypePipe',
+  pure: false
+})
+export class TypePipe implements PipeTransform {
+  transform(events: any, types: Type[]) {
+    if (!types || types.length === 0) {
+      return events;
+    }
+
+    const typeNames = [];
+    for (let i = 0; i < types.length; i++) {
+      if (types[i].checked) {
+        typeNames.push(types[i].name);
+      }
+    }
+
+    return events.filter(event => this.checkIncludes(typeNames, event.types));
+  }
+
+  private checkIncludes(typeNames: string[], eventTypes: string[]) {
+    let result = false;
+    for (let i = 0; i < eventTypes.length; i++) {
+      for (let j = 0; j < typeNames.length; j++) {
+        if (eventTypes[i] === typeNames[j]) {
+          result = true;
+        }
+      }
+    }
+    return result;
+  }
+}
+
+

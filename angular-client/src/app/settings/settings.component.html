@@ -1,4 +1,6 @@
-<div class="alert alert-success hidden" role="alert">
+<ng-container *ngIf="user">
+<div class="alert alert-success" [ngClass]="{'hidden': !success}"
+	role="alert">
 	<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> <span
 		class="sr-only">Success:</span> Changes saved
 </div>
@@ -19,11 +21,47 @@
 				required="required" [(ngModel)]="user.password" name="password" />
 		</div>
 	</div>
-	<div class="form-group" style="display: none;">
-		<div class="col-sm-10">
-			<select multiple="multiple" class="form-control" id="roles">
-
-			</select>
+	<div class="form-group">
+		<label for="emailNotif" class="col-sm-4 control-label">Email
+			notification enabled</label>
+		<div class="col-sm-8">
+			<input type="checkbox" id="emailNotif" name="emailNotif"
+				[(ngModel)]="user.settings.emailNotificationEnabled" value="">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="androidNotif" class="col-sm-4 control-label">Android
+			notification enabled</label>
+		<div class="col-sm-8">
+			<input type="checkbox" id="androidNotif" name="androidNotif"
+				[(ngModel)]="user.settings.androidNotificationEnabled" value="">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="eventNotif" class="col-sm-4 control-label">Event
+			notification enabled</label>
+		<div class="col-sm-8">
+			<input type="checkbox" id="eventNotif" name="eventNotif"
+				[(ngModel)]="user.settings.eventNotificationEnabled" value=""
+				[disabled]="user.settings.androidNotificationEnabled === false && user.settings.emailNotificationEnabled === false">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="locNotif" class="col-sm-4 control-label">Location
+			notification enabled</label>
+		<div class="col-sm-8">
+			<input type="checkbox" id="locNotif" name="locNotif"
+				[(ngModel)]="user.settings.locationNotificationEnabled" value=""
+				[disabled]="user.settings.androidNotificationEnabled === false && user.settings.emailNotificationEnabled === false">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="advNotif" class="col-sm-4 control-label">Advertiser
+			notification enabled</label>
+		<div class="col-sm-8">
+			<input type="checkbox" id="advNotif" name="advNotif"
+				[(ngModel)]="user.settings.advertiserNotificationEnabled" value=""
+				[disabled]="user.settings.androidNotificationEnabled === false && user.settings.emailNotificationEnabled === false">
 		</div>
 	</div>
 	<div class="form-group">
@@ -32,3 +70,4 @@
 		</div>
 	</div>
 </form>
+</ng-container>

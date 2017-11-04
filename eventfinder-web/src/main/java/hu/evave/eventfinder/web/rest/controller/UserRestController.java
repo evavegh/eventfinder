@@ -10,15 +10,19 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.evave.eventfinder.web.model.Event;
+import hu.evave.eventfinder.web.model.Location;
 import hu.evave.eventfinder.web.model.user.User;
 import hu.evave.eventfinder.web.repository.EventRepository;
+import hu.evave.eventfinder.web.repository.LocationRepository;
 import hu.evave.eventfinder.web.rest.resource.EventResource;
+import hu.evave.eventfinder.web.rest.resource.UserResource;
 import hu.evave.eventfinder.web.service.user.UserService;
 
 @RestController
@@ -28,11 +32,13 @@ public class UserRestController {
 
 	private UserService userService;
 	private EventRepository eventRepository;
+	private LocationRepository locationRepository;
 
 	@Autowired
-	public UserRestController(UserService userService, EventRepository eventRepository) {
+	public UserRestController(UserService userService, EventRepository eventRepository, LocationRepository locationRepository) {
 		this.userService = userService;
 		this.eventRepository = eventRepository;
+		this.locationRepository = locationRepository;
 	}
 
 	@PostMapping("/subscribe_event")
@@ -59,6 +65,50 @@ public class UserRestController {
 		}
 	}
 
+	@PostMapping("/subscribe_advertiser")
+	public void subscribeAdvertiser(@RequestBody long id) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+			User user = userService.getUserByName(authentication.getName());
+			User advertiser = userService.getUserById(id);
+			user.subscribeAdvertiser(advertiser);
+			userService.save(user);
+		}
+	}
+
+	@PostMapping("/unsubscribe_advertiser")
+	public void unsubscribeAdvertiser(@RequestBody long id) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+			User user = userService.getUserByName(authentication.getName());
+			User advertiser = userService.getUserById(id);
+			user.unsubscribeAdvertiser(advertiser);
+			userService.save(user);
+		}
+	}
+
+	@PostMapping("/subscribe_location")
+	public void subscribeLocation(@RequestBody long id) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+			User user = userService.getUserByName(authentication.getName());
+			Location location = locationRepository.findOne(id);
+			user.subscribeLocation(location);
+			userService.save(user);
+		}
+	}
+
+	@PostMapping("/unsubscribe_location")
+	public void unsubscribeLocation(@RequestBody long id) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+			User user = userService.getUserByName(authentication.getName());
+			Location location = locationRepository.findOne(id);
+			user.unsubscribeLocation(location);
+			userService.save(user);
+		}
+	}
+
 	@GetMapping(value = "/subscribedEvents", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public List<EventResource> findSubscribedEvents() {
 
@@ -69,6 +119,13 @@ public class UserRestController {
 			return EventResource.eventListToEventResourceList(user.getSavedEvents());
 		}
 		return new ArrayList<>();
+	}
+
+	@GetMapping(value = "/userById/{userId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public UserResource findUserById(@PathVariable("userId") long id) {
+		UserResource user = UserResource.fromUser(userService.getUserById(id));
+		user.setEventCount(eventRepository.countByCreatedBy(userService.getUserById(id)));
+		return user;
 	}
 
 }

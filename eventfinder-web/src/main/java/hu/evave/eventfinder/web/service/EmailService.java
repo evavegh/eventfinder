@@ -20,7 +20,7 @@ public class EmailService {
 		try {
 			helper.setTo(recipient);
 			helper.setText(text);
-			helper.setSubject("Registration successful");
+			helper.setSubject("Eventfinder notification");
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}

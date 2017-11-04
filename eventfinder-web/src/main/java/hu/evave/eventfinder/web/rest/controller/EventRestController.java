@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +20,7 @@ import hu.evave.eventfinder.web.model.type.EventType;
 import hu.evave.eventfinder.web.repository.EventRepository;
 import hu.evave.eventfinder.web.rest.request.EventRestRequest;
 import hu.evave.eventfinder.web.rest.resource.EventResource;
+import hu.evave.eventfinder.web.rest.resource.LocationResource;
 
 @RestController
 @RequestMapping("/rest")
@@ -71,6 +73,11 @@ public class EventRestController {
 		model.put("event", event);
 		return event;
 
+	}
+	
+	@GetMapping(value = "/locationByEventId/{eventId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public LocationResource findLocationByEventId(@PathVariable("eventId") long id) {
+		return new LocationResource(eventRepository.findOne(id).getLocation());
 	}
 
 }

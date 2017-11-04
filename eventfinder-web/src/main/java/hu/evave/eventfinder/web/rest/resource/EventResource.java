@@ -33,6 +33,8 @@ public class EventResource {
 	private String webUrl;
 	private String fbUrl;
 
+	private UserResource createdBy;
+
 	public EventResource(Event event) {
 		id = event.getId();
 		name = event.getName();
@@ -40,8 +42,8 @@ public class EventResource {
 		for (EventType type : event.getTypes()) {
 			types.add(type);
 		}
-		
-		for(Price price : event.getPrices()) {
+
+		for (Price price : event.getPrices()) {
 			prices.add(new PriceResource(price));
 		}
 
@@ -57,6 +59,8 @@ public class EventResource {
 		description = event.getDescription();
 		webUrl = event.getWebUrl();
 		fbUrl = event.getFbUrl();
+
+		createdBy = UserResource.fromUser(event.getCreatedBy());
 	}
 
 	public Long getId() {
@@ -102,7 +106,11 @@ public class EventResource {
 	public String getFbUrl() {
 		return fbUrl;
 	}
-	
+
+	public UserResource getCreatedBy() {
+		return createdBy;
+	}
+
 	public static List<EventResource> eventListToEventResourceList(List<Event> events) {
 
 		List<EventResource> result = new ArrayList<>();

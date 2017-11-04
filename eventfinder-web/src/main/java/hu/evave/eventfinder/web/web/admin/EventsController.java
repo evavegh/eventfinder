@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gson.Gson;
 
 import hu.evave.eventfinder.web.model.Event;
 import hu.evave.eventfinder.web.model.Location;
@@ -24,12 +23,17 @@ import hu.evave.eventfinder.web.model.type.EventType;
 import hu.evave.eventfinder.web.model.user.User;
 import hu.evave.eventfinder.web.repository.EventRepository;
 import hu.evave.eventfinder.web.repository.UserRepository;
+import hu.evave.eventfinder.web.rest.resource.EventResource;
+import hu.evave.eventfinder.web.service.EventService;
 
 @Controller
 public class EventsController {
 
 	@Autowired
 	EventRepository eventRepository;
+	
+	@Autowired
+	EventService eventService;
 	
 	@Autowired
 	UserRepository userRepository;
@@ -43,16 +47,16 @@ public class EventsController {
 	
 	@RequestMapping(value = "/events/json", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-	public String listEventsJson() {
-		return new Gson().toJson(eventRepository.findAll());
+	public List<EventResource> listEventsJson() {
+		return EventResource.eventListToEventResourceList(eventRepository.findAll());
 	}
 	
 	@RequestMapping(value = "/myevents/json", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-	public String listMyEventsJson() {
+	public List<EventResource> listMyEventsJson() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userRepository.findByName(auth.getName());
-		return new Gson().toJson(eventRepository.findByCreatedBy(user));
+		return EventResource.eventListToEventResourceList(eventRepository.findByCreatedBy(user));
 	}
 	
 	@RequestMapping("/myevents")
@@ -96,12 +100,18 @@ public class EventsController {
 		if(event.getId() != null && event.getId() < 0) {
 			event.setId(null);
 		}
-		System.out.println(event);
 		eventRepository.save(event);
+		
+		sendNotifications(event);
+		
 		return "redirect:/myevents";
 
 	}
 	
+	private void sendNotifications(Event event) {
+		eventService.sendCreateNotification(event);
+	}
+
 	@RequestMapping(value = "/edit/{eventId}", method = RequestMethod.GET)
 	public String edit(@PathVariable("eventId") long id, Map<String, Object> model) {	
 		

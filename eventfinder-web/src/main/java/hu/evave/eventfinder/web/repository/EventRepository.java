@@ -30,5 +30,7 @@ public interface EventRepository extends JpaRepository<Event, Long>, EventReposi
 	List<Event> findByNameContaining(String phrase);
 
 	List<Event> findByCreatedBy(User user);
-
+	
+	int countByCreatedBy(User id);
+	
 }

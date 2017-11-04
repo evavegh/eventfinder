@@ -3,9 +3,9 @@ import {Http, RequestOptions, URLSearchParams, Headers} from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import {Event} from './event';
+import {Event} from './model/event';
 import {SecurityService} from './security.service';
-import {User} from './user';
+import {User} from './model/user';
 
 
 @Injectable()
@@ -74,5 +74,8 @@ export class EventService {
       .catch(this.handleError);
   }
 
-
+  public getlatlng(address) {
+    return this.http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + address).toPromise()
+      .catch(this.handleError);
+  }
 }

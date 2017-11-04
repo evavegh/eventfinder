@@ -1,5 +1,6 @@
 package hu.evave.eventfinder.web.model;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -89,7 +90,7 @@ public class Event {
 	private User createdBy;
 	
 	@ManyToMany(mappedBy = "savedEvents", fetch = FetchType.LAZY)
-	private List<User> subscribedUsers;
+	private List<User> subscribedUsers = new ArrayList<>();
 
 	public Event() {
 	}

@@ -5,8 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -23,10 +21,15 @@ public class UserSettings {
 	@Column(name = "android_notification_enabled")
 	private boolean androidNotificationEnabled = true;
 
-	@OneToOne
-	@JoinColumn(name = "user_id")
-	private User user;
-	
+	@Column(name = "event_notification_enabled")
+	private boolean eventNotificationEnabled = true;
+
+	@Column(name = "advertiser_notification_enabled")
+	private boolean advertiserNotificationEnabled = true;
+
+	@Column(name = "location_notification_enabled")
+	private boolean locationNotificationEnabled = true;
+
 	public UserSettings() {
 	}
 
@@ -44,6 +47,38 @@ public class UserSettings {
 
 	public void setEmailNotificationEnabled(boolean emailNotificationEnabled) {
 		this.emailNotificationEnabled = emailNotificationEnabled;
+	}
+
+	public boolean isEventNotificationEnabled() {
+		return eventNotificationEnabled;
+	}
+
+	public void setEventNotificationEnabled(boolean eventNotificationEnabled) {
+		this.eventNotificationEnabled = eventNotificationEnabled;
+	}
+
+	public boolean isAdvertiserNotificationEnabled() {
+		return advertiserNotificationEnabled;
+	}
+
+	public void setAdvertiserNotificationEnabled(boolean advertiserNotificationEnabled) {
+		this.advertiserNotificationEnabled = advertiserNotificationEnabled;
+	}
+
+	public boolean isLocationNotificationEnabled() {
+		return locationNotificationEnabled;
+	}
+
+	public void setLocationNotificationEnabled(boolean locationNotificationEnabled) {
+		this.locationNotificationEnabled = locationNotificationEnabled;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 }

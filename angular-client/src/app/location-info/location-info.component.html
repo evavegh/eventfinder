@@ -1,0 +1,40 @@
+<ng-container *ngIf="location">
+<div class="row panel" style="margin-top: 2%;">
+	<div class="panel-heading lead">
+		<div *ngIf="location.name" class="row">
+			<div class="col-lg-8 col-md-8">{{location.name}}'s details</div>
+		</div>
+	</div>
+	<div class="panel-body row">
+		<div class="table-responsive panel col-lg-12 col-md-12">
+			<table class="table">
+				<tbody>
+					<tr>
+						<td class="text-info col-lg-2">Address</td>
+						<td class="col-lg-3">{{location.zipCode}} {{location?.city}},
+							{{location.address}}, {{location.country}}</td>
+					</tr>
+
+					<tr *ngIf="location.lat">
+						<td class="text-info col-lg-2">Coordinates</td>
+						<td class="col-lg-3">{{location.lat}}, {{location.lon}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="card-block" *ngIf="isAuthenticated() && !isSaved(location)">
+		<button type="button" class="btn btn-default btn-sm"
+			(click)="onSave(event)">
+			<span class="glyphicon glyphicon-star"></span> Save
+		</button>
+	</div>
+	<div class="card-block" *ngIf="isAuthenticated() && isSaved(location)">
+		<button type="button" class="btn btn-default btn-sm"
+			(click)="onForget(event)">
+			<span class="glyphicon glyphicon-star-empty"></span> Forget
+		</button>
+	</div>
+
+</div>
+</ng-container>

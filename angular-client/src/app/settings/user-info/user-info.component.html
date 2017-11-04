@@ -1,0 +1,41 @@
+<ng-container *ngIf="user">
+<div class="row panel" style="margin-top: 2%;">
+	<div class="panel-heading lead">
+		<div class="row">
+			<div class="col-lg-8 col-md-8">{{user.name}}'s profile</div>
+		</div>
+	</div>
+	<div class="panel-body row">
+		<div class="table-responsive panel col-lg-12 col-md-12">
+			<table class="table">
+				<tbody>
+					<tr>
+						<td class="text-info col-lg-2">Email address</td>
+						<td class="col-lg-3">{{user.email}}</td>
+					</tr>
+					<tr>
+						<td class="text-info col-lg-2">Member since</td>
+						<td class="col-lg-3">{{user.memberSince}}</td>
+					</tr>
+					<tr>
+						<td class="text-info col-lg-2">Advertisement count</td>
+						<td class="col-lg-3">{{user.eventCount}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="card-block" *ngIf="isAuthenticated() && !isSaved(user)">
+		<button type="button" class="btn btn-default btn-sm"
+			(click)="onSave(event)">
+			<span class="glyphicon glyphicon-star"></span> Save
+		</button>
+	</div>
+	<div class="card-block" *ngIf="isAuthenticated() && isSaved(user)">
+		<button type="button" class="btn btn-default btn-sm"
+			(click)="onForget(event)">
+			<span class="glyphicon glyphicon-star-empty"></span> Forget
+		</button>
+	</div>
+</div>
+</ng-container>

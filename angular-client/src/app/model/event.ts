@@ -1,5 +1,6 @@
 import {Location} from './location';
 import {Price} from './price';
+import {User} from './user';
 
 export class Event {
 
@@ -14,7 +15,8 @@ export class Event {
     public summary: string,
     public description: string,
     public fbUrl: string,
-    public webUrl: string
+    public webUrl: string,
+    public createdBy: User
   ) {
   }
 

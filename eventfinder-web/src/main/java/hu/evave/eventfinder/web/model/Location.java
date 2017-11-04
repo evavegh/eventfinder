@@ -1,13 +1,19 @@
 package hu.evave.eventfinder.web.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import hu.evave.eventfinder.web.model.user.User;
 
 @Entity
 @Table(name = "location")
@@ -32,11 +38,13 @@ public class Location {
 	@Column(precision = 11, scale = 8)
 	private BigDecimal lon;
 
-	public Location() {
+	@ManyToMany(mappedBy = "savedLocations", fetch = FetchType.LAZY)
+	private List<User> subscribedUsers = new ArrayList<>();
+
+	public Location() { 
 	}
 
-	public Location(String name, String country, String city, String zipCode, String address, BigDecimal lat,
-			BigDecimal lon) {
+	public Location(String name, String country, String city, String zipCode, String address, BigDecimal lat, BigDecimal lon) {
 		this.name = name;
 		this.country = country;
 		this.city = city;
@@ -104,6 +112,10 @@ public class Location {
 
 	public Long getId() {
 		return id;
+	}
+
+	public List<User> getSubscribedUsers() {
+		return subscribedUsers;
 	}
 
 }
