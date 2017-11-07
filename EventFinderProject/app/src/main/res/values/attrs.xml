@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="menuListIcon" format="reference"></attr>
+    <attr name="menuSearchIcon" format="reference"></attr>
+    <attr name="menuStarFullIcon" format="reference"></attr>
+    <attr name="menuStarEmptyIcon" format="reference"></attr>
+    <attr name="menuCalendarIcon" format="reference"></attr>
+    <attr name="menuMapIcon" format="reference"></attr>
+    <attr name="menuSettingsIcon" format="reference"></attr>
+    <attr name="menuInfoIcon" format="reference"></attr>
+
+    <attr name="colorSeparator" format="color"></attr>
+    <attr name="disabledDateTextColor" format="color"></attr>
+
+    <attr name="dateTextColor" format="color"></attr>
+
+</resources>

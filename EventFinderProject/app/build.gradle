@@ -1,0 +1,67 @@
+buildscript {
+    ext {
+        DB_VERSION = 19
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion '26.0.2'
+
+    defaultConfig {
+        applicationId "hu.evave.eventfinder"
+        minSdkVersion 16
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+greendao {
+    targetGenDir 'src/main/java'
+    daoPackage 'hu.evave.eventfinder.model.dao'
+    schemaVersion DB_VERSION
+}
+
+configurations {
+    compile.exclude group: 'stax'
+    compile.exclude group: 'xpp3'
+}
+
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.2.1'
+    compile 'com.android.support:appcompat-v7:24.1.1'
+    compile 'org.greenrobot:greendao:3.2.2'
+    compile 'com.android.support:design:24.1.1'
+    compile 'com.jakewharton:butterknife:8.2.1'
+    compile 'com.google.android.gms:play-services-location:9.4.0'
+    compile 'com.google.android.gms:play-services-maps:9.4.0'
+    compile 'com.android.support:support-v4:24.1.1'
+    compile 'com.google.guava:guava:19.0'
+    compile 'com.roomorama:caldroid:3.0.1'
+    compile 'com.android.support:design:24.1.1'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-simplexml:2.1.0'
+    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.okhttp3:okhttp:3.3.1'
+
+}

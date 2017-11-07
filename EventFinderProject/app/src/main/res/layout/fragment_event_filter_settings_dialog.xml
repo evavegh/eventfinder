@@ -1,0 +1,32 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="hu.evave.eventfinder.settings.eventfilter.fragment.EventFilterSettingsDialog">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+      <fragment
+          android:name="hu.evave.eventfinder.settings.eventfilter.fragment.EventFilterSettingsFragment"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/frgm_event_filter">
+      </fragment>
+        
+        
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnOk"
+            android:text="@android:string/ok"
+            android:layout_gravity="right" />
+        
+        
+    </LinearLayout>
+    
+
+
+</ScrollView>

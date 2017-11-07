@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <group>
+            <item
+                android:id="@+id/nav_events"
+                android:icon="?attr/menuListIcon"
+                android:title="@string/nav_events" />
+            <item
+                android:id="@+id/nav_calendar"
+                android:icon="?attr/menuCalendarIcon"
+                android:title="@string/nav_calendar" />
+            <item
+                android:id="@+id/nav_map"
+                android:icon="?attr/menuMapIcon"
+                android:title="@string/nav_map" />
+        </group>
+
+        <group android:id="@+id/nav_group_other">
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="?attr/menuSettingsIcon"
+                android:title="@string/nav_settings" />
+        </group>
+    </group>
+
+</menu>

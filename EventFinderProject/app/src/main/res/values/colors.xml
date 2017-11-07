@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#64FFDA</color>
+    <color name="colorPrimaryDark">#50C7A9</color>
+    <color name="colorAccent">#FF8064</color>
+
+    <color name="colorPrimary.Dark">#009688</color>
+    <color name="colorPrimaryDark.Dark">#197D73</color>
+    <color name="colorAccent.Dark">#d81b60</color>
+
+
+    <color name="textPrimary">#DE000000</color>
+    <color name="textSecondary">#8A000000</color>
+
+    <color name="textPrimary.Dark">#FFFFFFFF</color>
+    <color name="textSecondary.Dark">#B3FFFFFF</color>
+
+    <color name="disabledDateColor">#40000000</color>
+    <color name="disabledDateColor.Dark">#4dffffff</color>
+
+</resources>
+

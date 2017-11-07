@@ -1,0 +1,143 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="menuListIcon">@drawable/ic_list</item>
+        <item name="menuSearchIcon">@drawable/ic_search</item>
+        <item name="menuStarFullIcon">@drawable/ic_star_full_black</item>
+        <item name="menuStarEmptyIcon">@drawable/ic_star_empty_dark</item>
+        <item name="menuCalendarIcon">@drawable/ic_calendar</item>
+        <item name="menuMapIcon">@drawable/ic_map</item>
+        <item name="menuSettingsIcon">@drawable/ic_settings</item>
+        <item name="menuInfoIcon">@drawable/ic_info</item>
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+        <item name="colorSeparator">@color/textSecondary</item>
+        <item name="disabledDateTextColor">@color/disabledDateColor</item>
+
+        <item name="dateTextColor">@color/text_color_date</item>
+
+    </style>
+
+    <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary.Dark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark.Dark</item>
+        <item name="colorAccent">@color/colorAccent.Dark</item>
+
+        <item name="menuListIcon">@drawable/ic_list_dark</item>
+        <item name="menuSearchIcon">@drawable/ic_search_dark</item>
+        <item name="menuStarFullIcon">@drawable/ic_star_full_black</item>
+        <item name="menuStarEmptyIcon">@drawable/ic_star_empty_dark</item>
+        <item name="menuCalendarIcon">@drawable/ic_calendar_dark</item>
+        <item name="menuMapIcon">@drawable/ic_map_dark</item>
+        <item name="menuSettingsIcon">@drawable/ic_settings_dark</item>
+        <item name="menuInfoIcon">@drawable/ic_info_dark</item>
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+        <item name="colorSeparator">@color/textSecondary.Dark</item>
+        <item name="disabledDateTextColor">@color/disabledDateColor.Dark</item>
+
+        <item name="dateTextColor">@color/text_color_date_dark</item>
+
+    </style>
+
+
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar" />
+
+    <style name="AppTheme.Dark.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppTheme.Dark.PopupOverlay" parent="ThemeOverlay.AppCompat" />
+
+
+
+
+    <style name="CalendarStyle" parent="CaldroidDefault">
+        <item name="styleCaldroidViewLayout">@style/CalendarViewLayout</item>
+        <item name="styleCaldroidLeftArrow">@style/CalendarLeftButton</item>
+        <item name="styleCaldroidRightArrow">@style/CalendarRightButton</item>
+        <item name="styleCaldroidMonthName">@style/CalendarMonthName</item>
+        <item name="styleCaldroidGridView">@style/CalendarGridView</item>
+        <item name="styleCaldroidNormalCell">@style/CalendarNormalCell</item>
+        <item name="styleCaldroidSquareCell">@style/CalendarSquareCell</item>
+        <item name="styleCaldroidWeekdayView">@style/CalendarWeekday</item>
+    </style>
+
+    <style name="CalendarViewLayout" parent="CaldroidDefaultCalendarViewLayout">
+        <item name="android:background">?android:colorBackground</item>
+        <!--<item name="android:layout_width">match_parent</item>-->
+        <!--<item name="android:layout_height">wrap_content</item>-->
+    </style>
+
+    <style name="CalendarArrowButton" parent="CaldroidDefaultArrowButton">
+        <!--<item name="android:layout_width">44dp</item>-->
+        <!--<item name="android:layout_height">44dp</item>-->
+    </style>
+
+    <style name="CalendarLeftButton" parent="CalendarArrowButton">
+        <!--<item name="android:layout_alignParentLeft">true</item>-->
+        <item name="android:background">@drawable/left_arrow</item>
+    </style>
+
+    <style name="CalendarRightButton" parent="CalendarArrowButton">
+        <!--<item name="android:layout_alignParentRight">true</item>-->
+        <item name="android:background">@drawable/left_arrow</item>
+    </style>
+
+    <style name="CalendarMonthName" parent="CaldroidDefaultMonthName">
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <!--<item name="android:layout_width">0dp</item>-->
+        <!--<item name="android:layout_weight">1</item>-->
+        <!--<item name="android:layout_height">wrap_content</item>-->
+        <!--<item name="android:layout_marginTop">3dp</item>-->
+        <!--<item name="android:gravity">center_horizontal</item>-->
+        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:textSize">21sp</item>
+    </style>
+
+    <style name="CalendarGridView" parent="CaldroidDefaultGridView">
+        <!--<item name="android:adjustViewBounds">true</item>-->
+        <!--<item name="android:gravity">center_horizontal</item>-->
+        <!--<item name="android:listSelector">@null</item>-->
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:background">?android:colorBackground</item>
+        <!--<item name="android:horizontalSpacing">1dp</item>-->
+        <!--<item name="android:padding">1dp</item>-->
+        <!--<item name="android:verticalSpacing">1dp</item>-->
+    </style>
+
+    <style name="CalendarCell" parent="CaldroidDefaultCell">
+        <item name="android:textColor">?dateTextColor</item>
+        <item name="android:background">@drawable/calendar_cell_bg</item>
+        <!--<item name="android:gravity">center</item>-->
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CalendarNormalCell" parent="CalendarCell">
+        <item name="android:paddingTop">8sp</item>
+        <item name="android:paddingBottom">8sp</item>
+    </style>
+
+    <style name="CalendarSquareCell" parent="CalendarCell"/>
+
+    <style name="CalendarWeekday" parent="CalendarCell">
+        <!--<item name="android:textColor">?android:textColorSecondary</item>-->
+        <!--<item name="android:gravity">center</item>-->
+        <item name="android:textSize">12sp</item>
+        <item name="android:paddingTop">3dp</item>
+        <item name="android:paddingBottom">3dp</item>
+    </style>
+
+
+</resources>
