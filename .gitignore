@@ -13,3 +13,11 @@ buildNumber.properties
 .springBeans
 /.metadata/
 /.recommenders/
+*.iml
+.gradle/
+local.properties
+.idea/
+.DS_Store
+build
+captures
+bower_components/
