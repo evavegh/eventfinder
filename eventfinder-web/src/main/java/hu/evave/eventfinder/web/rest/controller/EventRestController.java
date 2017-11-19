@@ -55,7 +55,6 @@ public class EventRestController {
 		String[] types = new String[EventType.values().length];
 		for(int i = 0; i < EventType.values().length; i++) {
 			types[i] = EventType.values()[i].name();
-			System.out.println(types[i]);
 		}
 		return types;
 	}

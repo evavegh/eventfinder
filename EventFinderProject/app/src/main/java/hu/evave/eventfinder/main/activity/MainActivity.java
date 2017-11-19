@@ -205,7 +205,7 @@ public class MainActivity extends EventFinderActivity
         Long time = cal.getTimeInMillis();
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
         Intent intentAlarm = new Intent(this, NotificationPublisher.class);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, 10000, PendingIntent.getBroadcast(this, 1, intentAlarm, PendingIntent.FLAG_CANCEL_CURRENT));
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, 60000, PendingIntent.getBroadcast(this, 1, intentAlarm, PendingIntent.FLAG_CANCEL_CURRENT));
     }
 
     @Override

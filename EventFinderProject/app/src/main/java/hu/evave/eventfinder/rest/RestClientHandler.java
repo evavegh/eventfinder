@@ -28,7 +28,7 @@ import retrofit2.http.Query;
 
 public class RestClientHandler {
 
-    private static final String BASE_URL = "http://192.168.1.102:8080/eventfinder/rest/";
+    private static final String BASE_URL = "http://192.168.43.216:8080/eventfinder/rest/";
     private static DaoSession session;
 
     private Runnable finishedCallback;

@@ -23,11 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 import hu.evave.eventfinder.web.exception.AuthorizationException;
 import hu.evave.eventfinder.web.model.Event;
 import hu.evave.eventfinder.web.model.Location;
-import hu.evave.eventfinder.web.model.RestSession;
 import hu.evave.eventfinder.web.model.user.User;
 import hu.evave.eventfinder.web.repository.EventRepository;
 import hu.evave.eventfinder.web.repository.LocationRepository;
-import hu.evave.eventfinder.web.repository.RestSessionRepository;
 import hu.evave.eventfinder.web.rest.resource.EventResource;
 import hu.evave.eventfinder.web.rest.resource.UserResource;
 import hu.evave.eventfinder.web.service.user.UserService;
@@ -40,15 +38,12 @@ public class UserRestController {
 	private UserService userService;
 	private EventRepository eventRepository;
 	private LocationRepository locationRepository;
-	private RestSessionRepository restSessionRepository;
 
 	@Autowired
-	public UserRestController(UserService userService, EventRepository eventRepository, LocationRepository locationRepository,
-			RestSessionRepository restSessionRepository) {
+	public UserRestController(UserService userService, EventRepository eventRepository, LocationRepository locationRepository) {
 		this.userService = userService;
 		this.eventRepository = eventRepository;
 		this.locationRepository = locationRepository;
-		this.restSessionRepository = restSessionRepository;
 	}
 
 	@ExceptionHandler(AuthorizationException.class)
@@ -58,25 +53,14 @@ public class UserRestController {
 
 	@PostMapping("/subscribe_event")
 	public void subscribeEvent(@RequestBody long id, @RequestParam("token") String token) throws AuthorizationException {
-		User user = getCurrentUser(token);
+		User user = getCurrentUser();
 
 		Event event = eventRepository.getOne(id);
 		user.subscribeEvent(event);
 		userService.save(user);
 	}
 
-	private User getCurrentUser(String token) throws AuthorizationException {
-		if (token != null) {
-			RestSession session = restSessionRepository.findOne(token);
-			if (session == null || !session.isValid()) {
-				throw new AuthorizationException();
-			}
-
-			session.extendValidity();
-			restSessionRepository.save(session);
-			return session.getUser();
-		}
-
+	private User getCurrentUser() throws AuthorizationException {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication instanceof AnonymousAuthenticationToken) {
 			throw new AuthorizationException();
