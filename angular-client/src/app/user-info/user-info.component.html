@@ -25,13 +25,13 @@
 			</table>
 		</div>
 	</div>
-	<div class="card-block" *ngIf="isAuthenticated() && !isSaved(user)">
+	<div class="card-block" *ngIf="canSave() && !isSaved(user)">
 		<button type="button" class="btn btn-default btn-sm"
 			(click)="onSave(event)">
 			<span class="glyphicon glyphicon-star"></span> Save
 		</button>
 	</div>
-	<div class="card-block" *ngIf="isAuthenticated() && isSaved(user)">
+	<div class="card-block" *ngIf="canSave() && isSaved(user)">
 		<button type="button" class="btn btn-default btn-sm"
 			(click)="onForget(event)">
 			<span class="glyphicon glyphicon-star-empty"></span> Forget

@@ -2,6 +2,7 @@ package hu.evave.eventfinder.web.rest.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,11 +22,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.evave.eventfinder.web.exception.AuthorizationException;
-import hu.evave.eventfinder.web.model.Event;
-import hu.evave.eventfinder.web.model.Location;
+import hu.evave.eventfinder.web.mapper.EventFinderMapper;
 import hu.evave.eventfinder.web.model.user.User;
 import hu.evave.eventfinder.web.repository.EventRepository;
-import hu.evave.eventfinder.web.repository.LocationRepository;
 import hu.evave.eventfinder.web.rest.resource.EventResource;
 import hu.evave.eventfinder.web.rest.resource.UserResource;
 import hu.evave.eventfinder.web.service.user.UserService;
@@ -37,13 +36,13 @@ public class UserRestController {
 
 	private UserService userService;
 	private EventRepository eventRepository;
-	private LocationRepository locationRepository;
+	private EventFinderMapper mapper;
 
 	@Autowired
-	public UserRestController(UserService userService, EventRepository eventRepository, LocationRepository locationRepository) {
+	public UserRestController(UserService userService, EventRepository eventRepository, EventFinderMapper mapper) {
 		this.userService = userService;
 		this.eventRepository = eventRepository;
-		this.locationRepository = locationRepository;
+		this.mapper = mapper;
 	}
 
 	@ExceptionHandler(AuthorizationException.class)
@@ -53,75 +52,32 @@ public class UserRestController {
 
 	@PostMapping("/subscribe_event")
 	public void subscribeEvent(@RequestBody long id, @RequestParam("token") String token) throws AuthorizationException {
-		User user = getCurrentUser();
-
-		Event event = eventRepository.getOne(id);
-		user.subscribeEvent(event);
-		userService.save(user);
-	}
-
-	private User getCurrentUser() throws AuthorizationException {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication instanceof AnonymousAuthenticationToken) {
-			throw new AuthorizationException();
-		}
-
-		return userService.getUserByName(authentication.getName());
+		userService.setEventSubscription(id, true);
 	}
 
 	@PostMapping("/unsubscribe_event")
-	public void unsubscribeEvent(@RequestBody long id) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (!(authentication instanceof AnonymousAuthenticationToken)) {
-			User user = userService.getUserByName(authentication.getName());
-			Event event = eventRepository.getOne(id);
-			user.unsubscribeEvent(event);
-			userService.save(user);
-		}
+	public void unsubscribeEvent(@RequestBody long id) throws AuthorizationException {
+		userService.setEventSubscription(id, false);
 	}
 
 	@PostMapping("/subscribe_advertiser")
-	public void subscribeAdvertiser(@RequestBody long id) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (!(authentication instanceof AnonymousAuthenticationToken)) {
-			User user = userService.getUserByName(authentication.getName());
-			User advertiser = userService.getUserById(id);
-			user.subscribeAdvertiser(advertiser);
-			userService.save(user);
-		}
+	public void subscribeAdvertiser(@RequestBody long id) throws AuthorizationException {
+		userService.setAdvertiserSubscription(id, true);
 	}
 
 	@PostMapping("/unsubscribe_advertiser")
-	public void unsubscribeAdvertiser(@RequestBody long id) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (!(authentication instanceof AnonymousAuthenticationToken)) {
-			User user = userService.getUserByName(authentication.getName());
-			User advertiser = userService.getUserById(id);
-			user.unsubscribeAdvertiser(advertiser);
-			userService.save(user);
-		}
+	public void unsubscribeAdvertiser(@RequestBody long id) throws AuthorizationException {
+		userService.setAdvertiserSubscription(id, false);
 	}
 
 	@PostMapping("/subscribe_location")
-	public void subscribeLocation(@RequestBody long id) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (!(authentication instanceof AnonymousAuthenticationToken)) {
-			User user = userService.getUserByName(authentication.getName());
-			Location location = locationRepository.findOne(id);
-			user.subscribeLocation(location);
-			userService.save(user);
-		}
+	public void subscribeLocation(@RequestBody long id) throws AuthorizationException {
+		userService.setLocationSubscription(id, true);
 	}
 
 	@PostMapping("/unsubscribe_location")
-	public void unsubscribeLocation(@RequestBody long id) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (!(authentication instanceof AnonymousAuthenticationToken)) {
-			User user = userService.getUserByName(authentication.getName());
-			Location location = locationRepository.findOne(id);
-			user.unsubscribeLocation(location);
-			userService.save(user);
-		}
+	public void unsubscribeLocation(@RequestBody long id) throws AuthorizationException {
+		userService.setLocationSubscription(id, false);
 	}
 
 	@GetMapping(value = "/subscribedEvents", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -131,14 +87,14 @@ public class UserRestController {
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {
 			User user = userService.getUserByName(authentication.getName());
 
-			return EventResource.eventListToEventResourceList(user.getSavedEvents());
+			return user.getSavedEvents().stream().map(e -> mapper.toResource(e)).collect(Collectors.toList());
 		}
 		return new ArrayList<>();
 	}
 
 	@GetMapping(value = "/userById/{userId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public UserResource findUserById(@PathVariable("userId") long id) {
-		UserResource user = UserResource.fromUser(userService.getUserById(id));
+		UserResource user = mapper.toResource(userService.getUserById(id));
 		user.setEventCount(eventRepository.countByCreatedBy(userService.getUserById(id)));
 		return user;
 	}

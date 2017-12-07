@@ -1,6 +1,6 @@
-import {User} from '../../model/user';
-import { SecurityService } from '../../security.service';
-import {UserService} from '../../user.service';
+import {User} from '../model/user';
+import {SecurityService} from '../security.service';
+import {UserService} from '../user.service';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -24,10 +24,6 @@ export class UserInfoComponent implements OnInit {
 
   }
 
-  isAuthenticated(): boolean {
-    return this.securityService.isAuthenticated();
-  }
-
   public isSaved(advertiser: User): boolean {
     const user = this.securityService.getUser();
     for (let i = 0; i < user.savedAdvertisers.length; i++) {
@@ -43,6 +39,10 @@ export class UserInfoComponent implements OnInit {
 
   public onForget(event: Event) {
     this.userService.forgetAdvertiser(this.user, this.securityService.getUser());
+  }
+
+  public canSave(): boolean {
+    return this.securityService.isAuthenticated() && !this.securityService.hasRole('ADMIN') && !this.securityService.hasRole('SUPERADMIN');
   }
 
 }

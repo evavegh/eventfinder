@@ -16,37 +16,57 @@ public class UserSettingsResource {
 
 	private boolean locationNotificationEnabled = true;
 
-	public UserSettingsResource(UserSettings settings) {
-		this.id = settings.getId();
-		this.emailNotificationEnabled = settings.isEmailNotificationEnabled();
-		this.androidNotificationEnabled = settings.isAndroidNotificationEnabled();
-		this.eventNotificationEnabled = settings.isEventNotificationEnabled();
-		this.advertiserNotificationEnabled = settings.isAdvertiserNotificationEnabled();
-		this.locationNotificationEnabled = settings.isLocationNotificationEnabled();
+	public UserSettingsResource() {
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public boolean isEmailNotificationEnabled() {
 		return emailNotificationEnabled;
 	}
 
+	public void setEmailNotificationEnabled(boolean emailNotificationEnabled) {
+		this.emailNotificationEnabled = emailNotificationEnabled;
+	}
+
 	public boolean isAndroidNotificationEnabled() {
 		return androidNotificationEnabled;
+	}
+
+	public void setAndroidNotificationEnabled(boolean androidNotificationEnabled) {
+		this.androidNotificationEnabled = androidNotificationEnabled;
 	}
 
 	public boolean isEventNotificationEnabled() {
 		return eventNotificationEnabled;
 	}
 
+	public void setEventNotificationEnabled(boolean eventNotificationEnabled) {
+		this.eventNotificationEnabled = eventNotificationEnabled;
+	}
+
 	public boolean isAdvertiserNotificationEnabled() {
 		return advertiserNotificationEnabled;
+	}
+
+	public void setAdvertiserNotificationEnabled(boolean advertiserNotificationEnabled) {
+		this.advertiserNotificationEnabled = advertiserNotificationEnabled;
 	}
 
 	public boolean isLocationNotificationEnabled() {
 		return locationNotificationEnabled;
 	}
 
-	public Long getId() {
-		return id;
+	public void setLocationNotificationEnabled(boolean locationNotificationEnabled) {
+		this.locationNotificationEnabled = locationNotificationEnabled;
 	}
+
+	
 
 }

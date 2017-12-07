@@ -49,7 +49,7 @@ public class NotificationPublisher extends BroadcastReceiver {
         Date startTo = cal.getTime();
 
         QueryBuilder<Event> qb = App.getDaoSession().getEventDao().queryBuilder();
-        qb.where(EventDao.Properties.IsSaved.eq(true));
+        qb.where(qb.and(EventDao.Properties.IsSaved.eq(true), EventDao.Properties.StartsAt.between(startFrom, startTo)));
         return qb.list();
     }
 

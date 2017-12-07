@@ -18,50 +18,29 @@ import hu.evave.eventfinder.web.model.user.Role;
 import hu.evave.eventfinder.web.model.user.User;
 import hu.evave.eventfinder.web.repository.UserRepository;
 import hu.evave.eventfinder.web.service.user.UserService;
-import hu.evave.eventfinder.web.service.user.UserValidator;
 
 @Controller
 public class UserController {
 
-	@Autowired
 	private UserRepository userRepository;
-	
-	@Autowired
-	private UserValidator userValidator;
+	private UserService userService;
 
 	@Autowired
-	private UserService userService;
+	public UserController(UserRepository userRepository, UserService userService) {
+		this.userRepository = userRepository;
+		this.userService = userService;
+	}
 
 	@RequestMapping(value = "/registration", method = RequestMethod.GET)
 	public String registration(Map<String, Object> model) {
-		User user = new User();
-		user.setId(-1L);
-		user.setPassword("password");
-		user.addRole(Role.ADMIN);
-		userService.save(user);
+		User user = userService.createNewEmptyUser();
 		model.put("userForm", user);
-		System.out.println(user.getName() + user.getId());
 		return "registration";
 	}
 
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public String registration(@RequestBody User userForm, BindingResult bindingResult, Model model) {
-		System.out.println(userForm);
-		System.out.println(userForm.getId());
-		System.out.println(userForm.getName());
-		System.out.println(userForm.getEmail());
-		userValidator.validate(userForm, bindingResult);
-
-//		if (bindingResult.hasErrors()) {
-//			System.out.println(bindingResult.getAllErrors().toString());
-//			return "registration";
-//		}
-		
-		userForm.addRole(Role.REGISTERED);
-
-		userService.save(userForm);
-		userService.sendEmail(userForm);
-
+		userService.createNewUser(userForm, bindingResult);
 		return "redirect:/login";
 	}
 
@@ -72,7 +51,6 @@ public class UserController {
 
 	@RequestMapping(value = "/settings", method = RequestMethod.GET)
 	public String edit(Map<String, Object> model) {
-
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 		model.put("user", userRepository.findByName(auth.getName()));

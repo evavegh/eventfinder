@@ -16,27 +16,41 @@ public class PriceResource {
 
 	private PriceType type;
 
-	public PriceResource(Price price) {
-		id = price.getId();
-		currency = price.getCurrency();
-		amount = price.getAmount();
-		type = price.getType();
+	public PriceResource() {
 	}
 
 	public Long getId() {
 		return id;
 	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public Currency getCurrency() {
 		return currency;
+	}
+
+	public void setCurrency(Currency currency) {
+		this.currency = currency;
 	}
 
 	public BigDecimal getAmount() {
 		return amount;
 	}
 
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
+	}
+
 	public PriceType getType() {
 		return type;
 	}
+
+	public void setType(PriceType type) {
+		this.type = type;
+	}
+
+	
 
 }

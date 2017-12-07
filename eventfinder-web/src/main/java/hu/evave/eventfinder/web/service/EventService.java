@@ -10,14 +10,18 @@ import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import hu.evave.eventfinder.web.mapper.EventFinderMapper;
 import hu.evave.eventfinder.web.model.Event;
 import hu.evave.eventfinder.web.model.Location;
 import hu.evave.eventfinder.web.model.user.User;
 import hu.evave.eventfinder.web.model.user.UserSettings;
 import hu.evave.eventfinder.web.repository.EventRepository;
+import hu.evave.eventfinder.web.repository.UserRepository;
 
 @Service
 public class EventService {
@@ -25,7 +29,13 @@ public class EventService {
 	private static final int CONSTANT = 5;
 
 	@Autowired
-	private EventRepository eventRepository;
+	EventRepository eventRepository;
+
+	@Autowired
+	UserRepository userRepository;
+
+	@Autowired
+	EventFinderMapper eventMapper;
 
 	@Autowired
 	EmailService emailService;
@@ -127,6 +137,57 @@ public class EventService {
 				emailService.prepareAndSend(user.getEmail(), message);
 			}
 		}
+	}
+
+	public List<Event> getMyEvents() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userRepository.findByName(auth.getName());
+		return eventRepository.findByCreatedBy(user);
+	}
+
+	public void deleteEvent(Event eventToDelete) {
+		// valójában nem töröljük ki az adatbázisból
+		eventToDelete.setStartsAt(null);
+		eventRepository.save(eventToDelete);
+	}
+
+	public Event createEmptyEvent() {
+		Event event = new Event();
+		event.setId(-1L);
+		event.setLocation(new Location());
+		event.setTypes(new ArrayList<>());
+		return event;
+	}
+
+	public void corrigateTime(Event event) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(event.getStartsAt());
+		cal.add(Calendar.HOUR_OF_DAY, 1);
+		event.setStartsAt(cal.getTime());
+
+		cal.setTime(event.getEndsAt());
+		cal.add(Calendar.HOUR_OF_DAY, 1);
+		event.setEndsAt(cal.getTime());
+	}
+
+	public void createNewEvent(Event event) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		event.setCreatedBy(userRepository.findByName(auth.getName()));
+
+		if (event.getId() != null && event.getId() < 0) {
+			event.setId(null);
+		}
+
+		corrigateTime(event);
+
+		eventRepository.save(event);
+
+		sendCreateNotification(event);
+	}
+
+	public void editEvent(Event event) {
+		corrigateTime(event);
+		eventRepository.save(event);
 	}
 
 }

@@ -19,7 +19,7 @@ import {SecurityService} from './security.service';
 import {DatePickerModule} from 'angular-io-datepicker';
 import {RegistrationComponent} from './registration/registration.component';
 import {FieldErrorViewComponent} from './field-error-view/field-error-view.component';
-import {UserInfoComponent} from './settings/user-info/user-info.component';
+import {UserInfoComponent} from './user-info/user-info.component';
 import {UserService} from './user.service';
 import {LocationInfoComponent} from './location-info/location-info.component';
 import {LocationService} from './location.service';

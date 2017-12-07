@@ -13,7 +13,7 @@ public class UserSettings {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Long id;
 
 	@Column(name = "email_notification_enabled")
 	private boolean emailNotificationEnabled = true;
@@ -73,11 +73,11 @@ public class UserSettings {
 		this.locationNotificationEnabled = locationNotificationEnabled;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

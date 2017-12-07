@@ -26,40 +26,8 @@ public class UserResource {
 
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date memberSince;
-	
-	public static UserResource fromUser(User user) {
-		UserResource result = new UserResource(user);
-		
-		for (Event event : user.getSavedEvents()) {
-			result.savedEvents.add(new EventResource(event));
-		}
-		
-		return result;
-	}
 
 	public UserResource() {
-	}
-
-	private UserResource(User user) {
-		this.id = user.getId();
-		this.name = user.getName();
-		this.email = user.getEmail();
-		this.password = user.getPassword();
-		this.roles = user.getRoles().stream().map(r -> r.name()).collect(Collectors.toList());
-		this.memberSince = user.getMemberSince();
-		this.settings = new UserSettingsResource(user.getSettings());
-
-		this.savedEvents = new ArrayList<>();
-
-		this.savedAdvertisers = new ArrayList<>();
-		for (User advertiser : user.getSavedAdvertisers()) {
-			this.savedAdvertisers.add(new UserResource(advertiser));
-		}
-
-		this.savedLocations = new ArrayList<>();
-		for (Location location : user.getSavedLocations()) {
-			this.savedLocations.add(new LocationResource(location));
-		}
 	}
 
 	public long getId() {
@@ -86,14 +54,6 @@ public class UserResource {
 		this.email = email;
 	}
 
-	public List<String> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(List<String> roles) {
-		this.roles = roles;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -102,24 +62,20 @@ public class UserResource {
 		this.password = password;
 	}
 
+	public List<String> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
+
 	public List<EventResource> getSavedEvents() {
 		return savedEvents;
 	}
 
 	public void setSavedEvents(List<EventResource> savedEvents) {
 		this.savedEvents = savedEvents;
-	}
-
-	public Date getMemberSince() {
-		return memberSince;
-	}
-
-	public int getEventCount() {
-		return eventCount;
-	}
-
-	public void setEventCount(int eventCount) {
-		this.eventCount = eventCount;
 	}
 
 	public List<UserResource> getSavedAdvertisers() {
@@ -138,10 +94,30 @@ public class UserResource {
 		this.savedLocations = savedLocations;
 	}
 
+	public int getEventCount() {
+		return eventCount;
+	}
+
+	public void setEventCount(int eventCount) {
+		this.eventCount = eventCount;
+	}
+
 	public UserSettingsResource getSettings() {
 		return settings;
 	}
-	
+
+	public void setSettings(UserSettingsResource settings) {
+		this.settings = settings;
+	}
+
+	public Date getMemberSince() {
+		return memberSince;
+	}
+
+	public void setMemberSince(Date memberSince) {
+		this.memberSince = memberSince;
+	}
+
 	
 
 }

@@ -95,13 +95,11 @@ public class RestClientHandler {
                         //Dismiss Dialog
                         dialog.dismiss();
 
-                        //dialog = ProgressDialog.show(context, "siker", "siker");
 
                         if (response.isSuccessful()) {
                             /**
                              * Got Successfully
                              */
-                            //dialog = ProgressDialog.show(context, "siker2", "siker2");
                             eventsArray = response.body();
                             saveEvents(eventsArray);
                             dialog.dismiss();
@@ -112,7 +110,6 @@ public class RestClientHandler {
                     @Override
                     public void onFailure(Call<EventResponse[]> call, Throwable t) {
                         dialog.dismiss();
-                        //dialog = ProgressDialog.show(context, "failure", "failure");
                         Log.e("failure", String.valueOf(t.getMessage()));
                         Log.e("failure", String.valueOf(t.getCause()));
                         Log.e("failure", String.valueOf(t.getStackTrace()));
@@ -129,10 +126,6 @@ public class RestClientHandler {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            //dialog.dismiss();
-            //dialog = ProgressDialog.show(context, "vége", "vége");
-            //dialog = ProgressDialog.show(context, "url", url);
-
             finishedCallback.run();
         }
 

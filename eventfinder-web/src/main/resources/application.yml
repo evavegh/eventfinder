@@ -3,7 +3,7 @@ spring:
     show-sql: true
     database: MYSQL
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
       
   datasource:
     url: jdbc:mysql://localhost:3306/eventfinder?characterEncoding=UTF-8

@@ -35,91 +35,103 @@ public class EventResource {
 
 	private UserResource createdBy;
 
-	public EventResource(Event event) {
-		id = event.getId();
-		name = event.getName();
-
-		for (EventType type : event.getTypes()) {
-			types.add(type);
-		}
-
-		for (Price price : event.getPrices()) {
-			prices.add(new PriceResource(price));
-		}
-
-		location = new LocationResource(event.getLocation());
-		startsAt = event.getStartsAt();
-		endsAt = event.getEndsAt();
-
-		// prices.add(new PriceResource(event.getNormalPrice()));
-		// prices.add(new PriceResource(event.getStudentPrice()));
-		// prices.add(new PriceResource(event.getRetiredPrice()));
-
-		summary = event.getSummary();
-		description = event.getDescription();
-		webUrl = event.getWebUrl();
-		fbUrl = event.getFbUrl();
-
-		createdBy = UserResource.fromUser(event.getCreatedBy());
+	public EventResource() {
 	}
 
 	public Long getId() {
 		return id;
 	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public String getName() {
 		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public List<EventType> getTypes() {
 		return types;
 	}
 
+	public void setTypes(List<EventType> types) {
+		this.types = types;
+	}
+
 	public LocationResource getLocation() {
 		return location;
+	}
+
+	public void setLocation(LocationResource location) {
+		this.location = location;
 	}
 
 	public Date getStartsAt() {
 		return startsAt;
 	}
 
+	public void setStartsAt(Date startsAt) {
+		this.startsAt = startsAt;
+	}
+
 	public Date getEndsAt() {
 		return endsAt;
+	}
+
+	public void setEndsAt(Date endsAt) {
+		this.endsAt = endsAt;
 	}
 
 	public List<PriceResource> getPrices() {
 		return prices;
 	}
 
+	public void setPrices(List<PriceResource> prices) {
+		this.prices = prices;
+	}
+
 	public String getSummary() {
 		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
 	}
 
 	public String getDescription() {
 		return description;
 	}
 
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public String getWebUrl() {
 		return webUrl;
+	}
+
+	public void setWebUrl(String webUrl) {
+		this.webUrl = webUrl;
 	}
 
 	public String getFbUrl() {
 		return fbUrl;
 	}
 
+	public void setFbUrl(String fbUrl) {
+		this.fbUrl = fbUrl;
+	}
+
 	public UserResource getCreatedBy() {
 		return createdBy;
 	}
 
-	public static List<EventResource> eventListToEventResourceList(List<Event> events) {
-
-		List<EventResource> result = new ArrayList<>();
-
-		for (Event event : events) {
-			result.add(new EventResource(event));
-		}
-
-		return result;
+	public void setCreatedBy(UserResource createdBy) {
+		this.createdBy = createdBy;
 	}
 
 }
